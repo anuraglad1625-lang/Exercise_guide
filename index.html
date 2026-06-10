@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>BodyForge Pro — 6-Month Home Transformation</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Inter:wght@300;400;500;600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #090b0f;
+  --dark: #0e1118;
+  --panel: #141820;
+  --card: #1a1f2e;
+  --border: #252d40;
+  --border-light: #2e3850;
+  --accent: #e8ff47;
+  --accent-dim: rgba(232,255,71,0.08);
+  --accent-border: rgba(232,255,71,0.25);
+  --accent2: #ff6b35;
+  --accent3: #38bdf8;
+  --text: #e8eaf2;
+  --muted: #6b7694;
+  --muted2: #8a94b8;
+  --success: #4ade80;
+  --success-dim: rgba(74,222,128,0.1);
+  --warning: #fbbf24;
+  --warning-dim: rgba(251,191,36,0.1);
+  --danger: #f87171;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Barlow', sans-serif;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.6);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── TOAST ── */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+  pointer-events: auto;
+  box-shadow: var(--shadow);
+  max-width: 300px;
+}
+.toast.success { border-color: rgba(74,222,128,0.4); }
+.toast.info { border-color: rgba(56,189,248,0.4); }
+@keyframes slideIn { from { opacity:0; transform: translateX(24px); } to { opacity:1; transform: translateX(0); } }
+@keyframes fadeOut { from { opacity:1; } to { opacity:0; } }
+
+/* ── SAFETY BANNER ── */
+.safety-banner {
+  background: rgba(251,191,36,0.06);
+  border-bottom: 1px solid rgba(251,191,36,0.15);
+  padding: 8px 20px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--warning);
+  line-height: 1.5;
+}
+
+/* ── NAV ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(9,11,15,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 58px;
+  gap: 16px;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  text-transform: uppercase;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--text); }
+.nav-links {
+  display: flex;
+  gap: 2px;
+  list-style: none;
+  flex: 1;
+  justify-content: center;
+}
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: 7px;
+  transition: all 0.2s;
+  cursor: pointer;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--text); background: var(--panel); }
+.nav-links a.active { color: var(--accent); }
+.nav-cta { background: var(--accent) !important; color: var(--black) !important; font-weight: 700 !important; }
+.nav-cta:hover { background: #d4ea30 !important; }
+
+/* ── PAGE SYSTEM ── */
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  padding: 72px 24px 56px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 28px;
+}
+.hero h1 {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(52px, 8vw, 100px);
+  line-height: 0.93;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.hero h1 .accent { color: var(--accent); }
+.hero-sub {
+  font-size: 17px;
+  color: var(--muted2);
+  max-width: 520px;
+  margin-bottom: 40px;
+  line-height: 1.75;
+}
+.hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 64px; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: var(--black);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: var(--font-label);
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover { background: #d4ea30; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(232,255,71,0.25); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: var(--muted2);
+  font-weight: 500;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 9px;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-family: var(--font-label);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-label);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.btn-sm-accent { background: var(--accent); color: var(--black); }
+.btn-sm-accent:hover { background: #d4ea30; }
+.btn-sm-ghost { background: var(--card); color: var(--muted2); border: 1px solid var(--border); }
+.btn-sm-ghost:hover { color: var(--text); border-color: var(--border-light); }
+.btn-sm-success { background: var(--success-dim); color: var(--success); border: 1px solid rgba(74,222,128,0.3); }
+.btn-sm-danger { background: rgba(248,113,113,0.1); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 24px 80px;
+}
+.stat-box { background: var(--panel); padding: 28px 24px; text-align: center; transition: background 0.2s; }
+.stat-box:hover { background: var(--card); }
+.stat-num { font-family: var(--font-display); font-weight: 900; font-size: 52px; color: var(--accent); line-height: 1; display: block; }
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 6px; }
+
+/* ── SECTION HEADER ── */
+.section-header { max-width: 1100px; margin: 0 auto 40px; padding: 0 24px; }
+.section-eyebrow { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; }
+.section-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 4vw, 48px); text-transform: uppercase; line-height: 1; letter-spacing: 0.01em; }
+
+/* ── BENEFITS GRID ── */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+.benefit-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: all 0.2s;
+}
+.benefit-card:hover { border-color: var(--accent-border); transform: translateY(-2px); box-shadow: var(--shadow); }
+.benefit-icon { width: 44px; height: 44px; background: var(--accent-dim); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 22px; }
+.benefit-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 18px; text-transform: uppercase; margin-bottom: 8px; }
+.benefit-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+/* ── TRANSFORMATION SECTION ── */
+.transformation-section { max-width: 1100px; margin: 0 auto 80px; padding: 0 24px; }
+.transform-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px; }
+.transform-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; text-align: center; }
+.body-figure { width: 120px; height: 220px; margin: 0 auto 24px; }
+.transform-label { font-family: var(--font-display); font-weight: 700; font-size: 20px; text-transform: uppercase; margin-bottom: 16px; }
+.transform-label.after { color: var(--accent); }
+.transform-traits { list-style: none; text-align: left; }
+.transform-traits li { font-size: 13px; color: var(--muted); padding: 7px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.transform-traits li::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+.transform-card.after-card .transform-traits li::before { background: var(--accent); }
+.disclaimer { font-size: 12px; color: var(--muted); text-align: center; padding: 12px 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; font-style: italic; }
+
+/* ══════════════════════════════════════════════
+   WORKOUT PAGE
+══════════════════════════════════════════════ */
+
+/* ── WORKOUT TOOLBAR ── */
+.workout-toolbar {
+  background: var(--dark);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  position: sticky;
+  top: 58px;
+  z-index: 90;
+}
+.toolbar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.toolbar-inner::-webkit-scrollbar { display: none; }
+.day-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted2);
+}
+.day-pill:hover { border-color: var(--border-light); color: var(--text); }
+.day-pill.active { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
+.day-pill.rest-pill { color: #4a8aaa; }
+.day-pill.rest-pill.active { border-color: #4a8aaa; background: rgba(74,138,170,0.08); }
+.day-pill .done-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
+
+/* ── WORKOUT HEADER ── */
+.workout-header-area {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 24px 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.workout-day-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(36px, 6vw, 72px);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+.workout-day-title span { color: var(--accent); }
+
+/* ── LEVEL + TIMER ROW ── */
+.controls-row {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px 24px 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.level-switcher {
+  display: flex;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.level-btn {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  transition: all 0.2s;
+  font-family: var(--font-label);
+}
+.level-btn.active { background: var(--accent); color: var(--black); }
+.level-btn:hover:not(.active) { color: var(--text); background: var(--card); }
+
+/* Workout timer */
+.workout-timer-widget {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+.wt-time {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 60px;
+  letter-spacing: 0.04em;
+}
+.wt-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted2);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 4px;
+  transition: color 0.2s;
+  line-height: 1;
+}
+.wt-btn:hover { color: var(--text); }
+
+/* Stats strip */
+.workout-stats-strip {
+  max-width: 1100px;
+  margin: 0 auto 28px;
+  padding: 0 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.wss-item {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.wss-item strong { color: var(--accent); font-family: var(--font-display); font-size: 18px; font-weight: 700; }
+.wss-item span { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── EXERCISE SECTION LABEL ── */
+.ex-section-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 36px 0 16px;
+}
+.ex-section-tag {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 5px 14px;
+  border-radius: 20px;
+}
+.tag-circulation { background: rgba(74,222,128,0.12); color: var(--success); border: 1px solid rgba(74,222,128,0.2); }
+.tag-warmup { background: rgba(251,191,36,0.12); color: var(--warning); border: 1px solid rgba(251,191,36,0.2); }
+.tag-fatloss { background: rgba(255,107,53,0.12); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); }
+.tag-muscle { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+.tag-cooldown { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+.ex-section-line { flex: 1; height: 1px; background: var(--border); }
+.ex-section-count { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+/* ── EXERCISE CARD ── */
+.exercise-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+.exercise-card:hover { border-color: var(--border-light); }
+.exercise-card.completed { border-color: rgba(74,222,128,0.4); }
+.exercise-card.completed .ex-header { background: rgba(74,222,128,0.04); }
+.ex-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+.ex-header:hover { background: rgba(255,255,255,0.02); }
+.ex-number { font-family: var(--font-display); font-weight: 900; font-size: 28px; color: var(--border-light); line-height: 1; min-width: 34px; flex-shrink: 0; }
+.exercise-card.completed .ex-number { color: var(--success); }
+.ex-info { flex: 1; min-width: 0; }
+.ex-name { font-family: var(--font-display); font-weight: 700; font-size: 19px; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ex-meta { display: flex; gap: 12px; flex-wrap: wrap; }
+.ex-meta-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.ex-meta-item strong { color: var(--muted2); }
+.ex-badges { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+.ex-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.badge-muscle { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
+.badge-cardio { background: rgba(255,107,53,0.1); color: var(--accent2); border: 1px solid rgba(255,107,53,0.2); }
+.badge-circ { background: var(--success-dim); color: var(--success); border: 1px solid rgba(74,222,128,0.2); }
+
+.ex-complete-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  font-family: var(--font-label);
+}
+.ex-complete-btn:hover { border-color: var(--success); color: var(--success); background: var(--success-dim); }
+.ex-complete-btn.done { background: var(--success-dim); border-color: rgba(74,222,128,0.4); color: var(--success); }
+.ex-toggle { color: var(--muted); font-size: 18px; transition: transform 0.3s; flex-shrink: 0; }
+.ex-toggle.open { transform: rotate(180deg); }
+
+/* ── EXERCISE BODY ── */
+.ex-body { display: none; border-top: 1px solid var(--border); }
+.ex-body.open { display: block; }
+.ex-body-inner { display: grid; grid-template-columns: 1fr 280px; }
+.ex-content { padding: 24px; }
+.ex-diagram-panel { background: var(--card); border-left: 1px solid var(--border); padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+/* ── SET TRACKER ── */
+.set-tracker {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.set-tracker-title { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; font-weight: 600; }
+.set-rows { display: flex; flex-direction: column; gap: 8px; }
+.set-row {
+  display: grid;
+  grid-template-columns: 28px 1fr 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.set-row-num { font-size: 12px; font-weight: 700; color: var(--muted); text-align: center; }
+.set-input-wrap { position: relative; }
+.set-input {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+  text-align: center;
+  -webkit-appearance: none;
+}
+.set-input:focus { border-color: var(--accent); }
+.set-input-label { font-size: 10px; color: var(--muted); text-align: center; margin-top: 3px; }
+.set-done-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.set-done-btn:hover { background: var(--success-dim); border-color: rgba(74,222,128,0.4); color: var(--success); }
+.set-done-btn.done { background: var(--success-dim); border-color: rgba(74,222,128,0.4); color: var(--success); }
+
+/* ── REST TIMER ── */
+.rest-timer-bar {
+  display: none;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  align-items: center;
+  gap: 12px;
+}
+.rest-timer-bar.visible { display: flex; }
+.rtb-icon { font-size: 20px; flex-shrink: 0; }
+.rtb-content { flex: 1; }
+.rtb-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.rtb-progress { height: 6px; background: var(--panel); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+.rtb-fill { height: 100%; border-radius: 3px; background: var(--accent2); transition: width 1s linear; }
+.rtb-time { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--accent2); line-height: 1; flex-shrink: 0; }
+.rtb-skip { font-size: 11px; color: var(--muted); cursor: pointer; text-decoration: underline; margin-top: 2px; }
+.rtb-skip:hover { color: var(--text); }
+
+/* ── INFO GRID ── */
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.info-box { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.info-box-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+.info-box-val { font-family: var(--font-display); font-weight: 700; font-size: 18px; }
+
+/* ── STEPS ── */
+.steps-list { list-style: none; margin-bottom: 16px; }
+.steps-list li {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.steps-list li:last-child { border-bottom: none; }
+.step-num { font-family: var(--font-display); font-weight: 700; font-size: 17px; color: var(--accent); min-width: 22px; line-height: 1.3; }
+
+/* ── MINI TAGS ── */
+.mini-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.mini-tag { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+.mt-green { background: var(--success-dim); color: var(--success); }
+.mt-yellow { background: var(--accent-dim); color: var(--accent); }
+.mt-orange { background: rgba(255,107,53,0.1); color: var(--accent2); }
+.mt-blue { background: rgba(56,189,248,0.1); color: var(--accent3); }
+
+/* ── SAFETY BOX ── */
+.safety-box {
+  background: var(--warning-dim);
+  border: 1px solid rgba(251,191,36,0.2);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: var(--warning);
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* ── BENEFITS LIST ── */
+.benefits-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.benefit-pill {
+  font-size: 11px;
+  color: var(--success);
+  background: var(--success-dim);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+/* ── SVG DIAGRAM ── */
+.diagram-svg { width: 100%; max-width: 200px; }
+.diagram-label { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.4; }
+.target-chips { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; }
+.target-chip { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 12px; background: var(--panel); border: 1px solid var(--border); color: var(--muted2); }
+
+/* ── WORKOUT COMPLETION PANEL ── */
+.completion-panel {
+  display: none;
+  max-width: 1100px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+.completion-panel.visible { display: block; }
+.completion-card {
+  background: linear-gradient(135deg, rgba(232,255,71,0.08), rgba(74,222,128,0.06));
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+}
+.completion-title {
+  font-family: var(--font-display);
+  font-size: 42px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.completion-stats { display: flex; gap: 24px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
+.cs-item { text-align: center; }
+.cs-val { font-family: var(--font-display); font-size: 36px; font-weight: 900; color: var(--accent); display: block; }
+.cs-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── PLACEHOLDER ── */
+.workout-placeholder {
+  padding: 60px 24px;
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── REST DAY ── */
+.rest-day-view { max-width: 1100px; margin: 0 auto; padding: 48px 24px; display: none; }
+.rest-day-view.visible { display: block; }
+.rest-big { font-family: var(--font-display); font-weight: 900; font-size: clamp(48px, 8vw, 96px); text-transform: uppercase; line-height: 0.95; margin-bottom: 24px; }
+.rest-big span { color: #4a8aaa; }
+.rest-activities { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 860px; margin: 40px 0; }
+.rest-activity { background: var(--panel); border: 1px solid rgba(26,42,58,1); border-radius: var(--radius); padding: 22px; }
+.rest-activity-icon { font-size: 28px; margin-bottom: 10px; }
+.rest-activity h4 { font-family: var(--font-display); font-weight: 700; font-size: 16px; text-transform: uppercase; margin-bottom: 6px; color: #4a8aaa; }
+.rest-activity p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+/* ══════════════════════════════════════════════
+   DASHBOARD PAGE
+══════════════════════════════════════════════ */
+.dashboard-section { background: var(--dark); padding: 64px 24px; }
+.dashboard-inner { max-width: 1100px; margin: 0 auto; }
+.streak-display { display: flex; gap: 14px; margin-bottom: 32px; flex-wrap: wrap; }
+.streak-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; flex: 1; min-width: 150px; text-align: center; transition: all 0.2s; }
+.streak-box:hover { border-color: var(--border-light); }
+.streak-num { font-family: var(--font-display); font-weight: 900; font-size: 48px; color: var(--accent); line-height: 1; display: block; }
+.streak-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+.progress-bar-wrap { background: var(--card); border-radius: 4px; height: 8px; margin: 8px 0; overflow: hidden; }
+.progress-bar { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent), #a8ff00); transition: width 0.6s ease; }
+.tracker-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.tracker-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.tracker-card label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 8px; }
+.tracker-row { display: flex; gap: 8px; align-items: center; }
+.tracker-input {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-size: 16px;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-appearance: none;
+}
+.tracker-input:focus { border-color: var(--accent); }
+.tracker-unit { font-size: 12px; color: var(--muted); min-width: 28px; }
+.save-btn { background: var(--accent); color: var(--black); border: none; border-radius: 6px; padding: 11px 20px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: var(--font-label); transition: all 0.2s; }
+.save-btn:hover { background: #d4ea30; }
+.history-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.history-table th { text-align: left; padding: 10px 14px; background: var(--card); color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.history-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
+.history-table tr:last-child td { border-bottom: none; }
+.week-progress { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin: 12px 0; }
+.week-dot { height: 40px; border-radius: 8px; background: var(--panel); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; transition: all 0.2s; }
+.week-dot:hover { border-color: var(--border-light); }
+.week-dot.done { background: var(--success-dim); border-color: rgba(74,222,128,0.35); color: var(--success); }
+.week-dot.today { border-color: var(--accent); color: var(--accent); }
+
+/* ══════════════════════════════════════════════
+   NUTRITION PAGE
+══════════════════════════════════════════════ */
+.nutrition-section { max-width: 1100px; margin: 0 auto; padding: 64px 24px; }
+.nutrition-quote { background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 28px 32px; font-family: var(--font-display); font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 32px; }
+.nutrition-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+.nutrition-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.2s; }
+.nutrition-card:hover { border-color: var(--border-light); }
+.nutrition-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 18px; text-transform: uppercase; margin-bottom: 10px; }
+.nutrition-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 8px; }
+.nutrition-card ul { list-style: none; }
+.nutrition-card ul li { font-size: 13px; color: var(--muted); padding: 4px 0; display: flex; gap: 8px; }
+.nutrition-card ul li::before { content: '→'; color: var(--accent); flex-shrink: 0; }
+
+/* ══════════════════════════════════════════════
+   MOTIVATION PAGE
+══════════════════════════════════════════════ */
+.motivation-section { background: var(--panel); border-top: 1px solid var(--border); padding: 64px 24px; }
+.motivation-inner { max-width: 800px; margin: 0 auto; }
+.quote-display { font-family: var(--font-display); font-weight: 700; font-size: clamp(22px, 4vw, 38px); text-transform: uppercase; line-height: 1.2; margin-bottom: 10px; color: var(--accent); }
+.quote-author { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.tip-box { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; margin-bottom: 14px; transition: all 0.2s; }
+.tip-box:hover { border-color: var(--border-light); }
+.tip-box h4 { font-family: var(--font-display); font-weight: 700; font-size: 16px; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.tip-box p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+/* ══════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════ */
+footer { background: var(--dark); border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.8; }
+footer strong { color: var(--text); }
+
+/* ══════════════════════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .transform-cards { grid-template-columns: 1fr; }
+  .ex-body-inner { grid-template-columns: 1fr; }
+  .ex-diagram-panel { border-left: none; border-top: 1px solid var(--border); }
+  .tracker-grid { grid-template-columns: 1fr 1fr; }
+  .nutrition-grid { grid-template-columns: 1fr; }
+  .rest-activities { grid-template-columns: 1fr 1fr; }
+  .info-grid { grid-template-columns: 1fr 1fr; }
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  .mobile-nav { display: flex; }
+  .hero h1 { font-size: 52px; }
+  .ex-badges { display: none; }
+  .completion-stats { gap: 16px; }
+}
+@media (max-width: 480px) {
+  .tracker-grid { grid-template-columns: 1fr; }
+  .rest-activities { grid-template-columns: 1fr; }
+  .workout-stats-strip { gap: 8px; }
+  .wss-item { padding: 8px 12px; }
+  .stats-row { margin: 0 16px 60px; }
+}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: rgba(9,11,15,0.97);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+  justify-content: space-around;
+}
+.mob-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 4px 12px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s;
+}
+.mob-nav-btn .icon { font-size: 20px; }
+.mob-nav-btn.active { color: var(--accent); }
+body { padding-bottom: 0; }
+@media (max-width: 768px) {
+  .mobile-nav { display: flex; }
+  body { padding-bottom: 64px; }
+}
+
+/* ── CALORIE COUNTER ── */
+.calorie-counter {
+  background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(255,107,53,0.04));
+  border: 1px solid rgba(255,107,53,0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.cc-num { font-family: var(--font-display); font-size: 28px; font-weight: 900; color: var(--accent2); }
+.cc-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* ── WORKOUT LIST WRAPPER ── */
+.workout-list-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 48px;
+  display: none;
+}
+.workout-list-wrap.visible { display: block; }
+
+/* ── PRINT ── */
+@media print {
+  nav, .safety-banner, .workout-toolbar, .mobile-nav, footer, .set-tracker, .rest-timer-bar { display: none !important; }
+  body { background: white; color: black; }
+  .exercise-card { page-break-inside: avoid; border: 1px solid #ccc; }
+  .ex-body { display: block !important; }
+  .ex-diagram-panel { background: #f5f5f5; }
+  .page-section { display: block !important; }
+}
+
+/* ── ANIMATED RING ── */
+.progress-ring { transform: rotate(-90deg); }
+.progress-ring-circle { transition: stroke-dashoffset 0.5s ease; }
+
+/* Utility */
+.hidden { display: none !important; }
+.text-center { text-align: center; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.divider { height: 1px; background: var(--border); margin: 24px 0; }
+</style>
+</head>
+<body>
+
+<!-- SAFETY BANNER -->
+<div class="safety-banner">
+  ⚕️ Consult a healthcare professional before beginning any exercise program. Individuals with heart conditions, blood pressure issues, cervical spine disorders, vertigo, glaucoma, recent surgeries, or other medical conditions must seek professional advice first.
+</div>
+
+<!-- NAV (desktop) -->
+<nav>
+  <div class="nav-logo" onclick="showPage('home')">Body<span>Forge</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">🏠 Home</a></li>
+    <li><a onclick="showPage('workouts')" id="nav-workouts">💪 Workouts</a></li>
+    <li><a onclick="showPage('dashboard')" id="nav-dashboard">📊 Dashboard</a></li>
+    <li><a onclick="showPage('nutrition')" id="nav-nutrition">🥗 Nutrition</a></li>
+    <li><a onclick="showPage('motivation')" id="nav-motivation">🔥 Motivation</a></li>
+    <li><a onclick="showPage('workouts')" class="nav-cta">Start Today →</a></li>
+  </ul>
+</nav>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav">
+  <button class="mob-nav-btn active" id="mob-home" onclick="showPage('home')"><span class="icon">🏠</span>Home</button>
+  <button class="mob-nav-btn" id="mob-workouts" onclick="showPage('workouts')"><span class="icon">💪</span>Train</button>
+  <button class="mob-nav-btn" id="mob-dashboard" onclick="showPage('dashboard')"><span class="icon">📊</span>Stats</button>
+  <button class="mob-nav-btn" id="mob-nutrition" onclick="showPage('nutrition')"><span class="icon">🥗</span>Fuel</button>
+  <button class="mob-nav-btn" id="mob-motivation" onclick="showPage('motivation')"><span class="icon">🔥</span>Mindset</button>
+</nav>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ════════════════ HOME PAGE ════════════════ -->
+<div id="page-home" class="page-section active">
+  <section class="hero">
+    <div class="hero-eyebrow">💪 No Gym Required · Bodyweight Only · 6 Months</div>
+    <h1>6-Month<br>Home Body<br><span class="accent">Transformation</span></h1>
+    <p class="hero-sub">Build muscle, lose fat, and reshape your body using only your bodyweight. A complete, trainer-free program — your virtual coach is built right in.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="showPage('workouts')">Start Today →</button>
+      <button class="btn-ghost" onclick="showPage('dashboard')">📊 Track Progress</button>
+    </div>
+  </section>
+
+  <div class="stats-row">
+    <div class="stat-box"><span class="stat-num">180</span><div class="stat-label">Training Days</div></div>
+    <div class="stat-box"><span class="stat-num">6</span><div class="stat-label">Months</div></div>
+    <div class="stat-box"><span class="stat-num">0</span><div class="stat-label">Equipment Needed</div></div>
+    <div class="stat-box"><span class="stat-num">30<small style="font-size:22px">min</small></span><div class="stat-label">Per Session</div></div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-eyebrow">What You'll Achieve</div>
+    <div class="section-title">Program Benefits</div>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-card"><div class="benefit-icon">🔥</div><h3>Fat Loss</h3><p>Structured cardio and HIIT exercises to burn calories, reduce body fat, and improve cardiovascular health.</p></div>
+    <div class="benefit-card"><div class="benefit-icon">💪</div><h3>Muscle Building</h3><p>Progressive bodyweight exercises targeting every major muscle group for visible definition and strength.</p></div>
+    <div class="benefit-card"><div class="benefit-icon">🧍</div><h3>Better Posture</h3><p>Daily circulation and mobility work to correct postural imbalances and reduce stiffness from sedentary habits.</p></div>
+    <div class="benefit-card"><div class="benefit-icon">🫀</div><h3>Cardio Health</h3><p>Improved stamina, reduced resting heart rate, and a stronger cardiovascular system over 6 months.</p></div>
+    <div class="benefit-card"><div class="benefit-icon">🧘</div><h3>Mobility & Flexibility</h3><p>Structured warm-up and cool-down routines to improve joint mobility and muscle flexibility every single day.</p></div>
+    <div class="benefit-card"><div class="benefit-icon">🤖</div><h3>Built-In Coach</h3><p>Set tracker, rest timers, calorie counter, form cues, and progress dashboard — everything a trainer provides, built in.</p></div>
+  </div>
+
+  <div class="transformation-section">
+    <div class="section-header" style="padding:0; margin-bottom:28px;">
+      <div class="section-eyebrow">What to Expect</div>
+      <div class="section-title">Body Transformation</div>
+    </div>
+    <div class="transform-cards">
+      <div class="transform-card">
+        <div class="transform-label">Before · Day 1</div>
+        <svg class="body-figure" viewBox="0 0 120 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="24" r="18" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/>
+          <rect x="54" y="40" width="12" height="12" rx="3" fill="#2a3040"/>
+          <ellipse cx="60" cy="88" rx="26" ry="36" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/>
+          <ellipse cx="60" cy="96" rx="22" ry="18" fill="#242a36"/>
+          <path d="M34 60 Q20 90 22 120" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <path d="M86 60 Q100 90 98 120" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <path d="M48 120 Q44 165 46 200" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/>
+          <path d="M72 120 Q76 165 74 200" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/>
+        </svg>
+        <ul class="transform-traits">
+          <li>Average sedentary posture</li>
+          <li>Higher body fat percentage</li>
+          <li>Limited muscle definition</li>
+          <li>Lower energy levels</li>
+          <li>Reduced flexibility</li>
+        </ul>
+      </div>
+      <div class="transform-card after-card">
+        <div class="transform-label after">After · 6 Months</div>
+        <svg class="body-figure" viewBox="0 0 120 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="60" cy="22" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/>
+          <rect x="55" y="37" width="10" height="10" rx="3" fill="#2a3040"/>
+          <path d="M38 52 Q32 80 36 118 Q48 124 72 124 Q76 80 82 52 Q70 44 60 43 Q50 44 38 52Z" fill="#2a3040" stroke="#e8ff47" stroke-width="1" opacity="0.9"/>
+          <path d="M46 64 Q55 68 60 66 Q65 68 74 64" stroke="#3a4a60" stroke-width="1.5" fill="none"/>
+          <line x1="55" y1="80" x2="65" y2="80" stroke="#3a4a60" stroke-width="1"/>
+          <line x1="55" y1="92" x2="65" y2="92" stroke="#3a4a60" stroke-width="1"/>
+          <line x1="60" y1="72" x2="60" y2="106" stroke="#3a4a60" stroke-width="1"/>
+          <path d="M38 56 Q24 84 26 112" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/>
+          <path d="M82 56 Q96 84 94 112" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/>
+          <ellipse cx="31" cy="84" rx="7" ry="5" fill="#313a4a" transform="rotate(-15 31 84)"/>
+          <ellipse cx="89" cy="84" rx="7" ry="5" fill="#313a4a" transform="rotate(15 89 84)"/>
+          <path d="M47 122 Q44 162 46 198" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <path d="M73 122 Q76 162 74 198" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/>
+          <path d="M40 52 Q60 46 80 52" stroke="#e8ff47" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.5"/>
+        </svg>
+        <ul class="transform-traits">
+          <li>Improved upright posture</li>
+          <li>Reduced body fat</li>
+          <li>Visible muscle definition</li>
+          <li>Higher energy & stamina</li>
+          <li>Better flexibility & mobility</li>
+        </ul>
+      </div>
+    </div>
+    <div class="disclaimer">Results vary depending on consistency, nutrition, sleep, age, recovery, genetics, and lifestyle. Individual results may differ significantly.</div>
+  </div>
+
+  <div style="text-align:center; padding: 20px 24px 80px;">
+    <p style="color:var(--muted); margin-bottom:20px; font-size:14px;">Your virtual trainer is ready. No gym, no equipment, no excuses.</p>
+    <button class="btn-primary" onclick="showPage('workouts')" style="font-size:17px; padding: 16px 40px;">Begin Your Transformation →</button>
+  </div>
+</div>
+
+<!-- ════════════════ WORKOUTS PAGE ════════════════ -->
+<div id="page-workouts" class="page-section">
+
+  <!-- STICKY DAY TOOLBAR -->
+  <div class="workout-toolbar">
+    <div class="toolbar-inner" id="dayToolbar">
+      <div class="day-pill" onclick="loadDay('monday')" id="pill-monday">Mon</div>
+      <div class="day-pill" onclick="loadDay('tuesday')" id="pill-tuesday">Tue</div>
+      <div class="day-pill" onclick="loadDay('wednesday')" id="pill-wednesday">Wed</div>
+      <div class="day-pill" onclick="loadDay('thursday')" id="pill-thursday">Thu</div>
+      <div class="day-pill" onclick="loadDay('friday')" id="pill-friday">Fri</div>
+      <div class="day-pill" onclick="loadDay('saturday')" id="pill-saturday">Sat</div>
+      <div class="day-pill rest-pill" onclick="loadDay('sunday')" id="pill-sunday">☽ Rest</div>
+    </div>
+  </div>
+
+  <!-- PLACEHOLDER -->
+  <div class="workout-placeholder" id="workout-placeholder">
+    <div style="font-size:52px; margin-bottom:16px;">☝️</div>
+    <div style="font-family:var(--font-display); font-size:30px; font-weight:800; text-transform:uppercase; margin-bottom:8px;">Select a Day</div>
+    <div style="color:var(--muted); font-size:15px; margin-bottom:24px; max-width:400px; margin-left:auto; margin-right:auto;">Choose any day above to see your complete workout with built-in coaching, set tracking, and rest timers.</div>
+    <button class="btn-primary" onclick="autoLoadToday()">📅 Load Today's Workout</button>
+  </div>
+
+  <!-- REST DAY VIEW -->
+  <div class="rest-day-view" id="rest-day-view">
+    <div class="rest-big">Sunday<br><span>Recovery &</span><br>Rest Day</div>
+    <p style="color:var(--muted); font-size:16px; max-width:560px; margin-bottom:12px;">Muscles grow during recovery, not during training. Rest is not weakness — it is strategy.</p>
+    <div class="rest-activities">
+      <div class="rest-activity"><div class="rest-activity-icon">🚶</div><h4>Light Walking</h4><p>15–30 minutes of easy walking to keep blood flowing without taxing your muscles.</p></div>
+      <div class="rest-activity"><div class="rest-activity-icon">🧘</div><h4>Gentle Stretching</h4><p>Hold each stretch for 30–60 seconds. Focus on areas that feel tight from the week's training.</p></div>
+      <div class="rest-activity"><div class="rest-activity-icon">🫁</div><h4>Deep Breathing</h4><p>4-7-8 breathing: inhale 4 sec, hold 7 sec, exhale 8 sec. Reduces cortisol and aids recovery.</p></div>
+      <div class="rest-activity"><div class="rest-activity-icon">🧠</div><h4>Meditation</h4><p>Even 10 minutes of mindfulness reduces stress hormones that interfere with muscle recovery.</p></div>
+      <div class="rest-activity"><div class="rest-activity-icon">💧</div><h4>Hydration</h4><p>Aim for 2.5–3 litres of water. Add electrolytes if the week was intense.</p></div>
+      <div class="rest-activity"><div class="rest-activity-icon">😴</div><h4>Quality Sleep</h4><p>7–9 hours. Growth hormone is released during deep sleep — this is when muscles rebuild.</p></div>
+    </div>
+    <div class="safety-box" style="max-width:700px;">
+      <strong>Sunday Mobility Tip:</strong> Spend 10 minutes doing light foam rolling or self-massage on legs, back, and shoulders. This improves tissue quality and reduces next-week soreness.
+    </div>
+  </div>
+
+  <!-- WORKOUT VIEW -->
+  <div id="workout-active-view" style="display:none;">
+    <!-- Header -->
+    <div class="workout-header-area">
+      <div>
+        <div class="workout-day-title" id="workout-title">Monday<br><span>Upper Body</span></div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px; align-items:flex-end;">
+        <div style="font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em;">Difficulty</div>
+        <div class="level-switcher">
+          <button class="level-btn active" onclick="setLevel('beginner',this)">Beginner</button>
+          <button class="level-btn" onclick="setLevel('intermediate',this)">Intermediate</button>
+          <button class="level-btn" onclick="setLevel('advanced',this)">Advanced</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls Row -->
+    <div class="controls-row">
+      <div class="workout-timer-widget" title="Workout duration">
+        <span style="font-size:14px; color:var(--muted);">⏱</span>
+        <div class="wt-time" id="wtDisplay">00:00</div>
+        <button class="wt-btn" id="wtToggleBtn" onclick="toggleWorkoutTimer()" title="Start/Pause">▶</button>
+        <button class="wt-btn" onclick="resetWorkoutTimer()" title="Reset">↺</button>
+      </div>
+      <button class="btn-sm btn-sm-ghost" onclick="window.print()">🖨 Print</button>
+      <button class="btn-sm btn-sm-ghost" onclick="resetDayProgress()" id="resetBtn">↺ Reset</button>
+    </div>
+
+    <!-- Stats Strip -->
+    <div class="workout-stats-strip" id="statsStrip">
+      <div class="wss-item"><strong id="ss-exercises">0</strong><span>Exercises</span></div>
+      <div class="wss-item"><strong id="ss-done">0</strong><span>Done</span></div>
+      <div class="wss-item"><strong id="ss-calories">0</strong><span>~Cals Burned</span></div>
+      <div class="wss-item"><strong id="ss-time">~30</strong><span>min</span></div>
+    </div>
+
+    <!-- Completion Panel (hidden until all done) -->
+    <div class="completion-panel" id="completionPanel">
+      <div class="completion-card">
+        <div class="completion-title">🎉 Workout Complete!</div>
+        <p style="color:var(--muted2); margin-bottom:4px;">Outstanding work. Recovery starts now.</p>
+        <div class="completion-stats">
+          <div class="cs-item"><span class="cs-val" id="cp-exercises">0</span><div class="cs-label">Exercises</div></div>
+          <div class="cs-item"><span class="cs-val" id="cp-time">0</span><div class="cs-label">Minutes</div></div>
+          <div class="cs-item"><span class="cs-val" id="cp-cals">~0</span><div class="cs-label">Calories</div></div>
+        </div>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="showPage('dashboard')">📊 View Progress</button>
+          <button class="btn-ghost" onclick="showPage('nutrition')">🥗 Post-Workout Fuel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Exercise List -->
+    <div class="workout-list-wrap visible" id="exercise-list-wrap">
+      <div id="exercise-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ DASHBOARD PAGE ════════════════ -->
+<div id="page-dashboard" class="page-section">
+  <div class="dashboard-section">
+    <div class="dashboard-inner">
+      <div class="section-header" style="padding:0; margin-bottom:36px;">
+        <div class="section-eyebrow">Your Journey</div>
+        <div class="section-title">Progress Dashboard</div>
+      </div>
+
+      <div class="streak-display">
+        <div class="streak-box"><span class="streak-num" id="streak-count">0</span><div class="streak-label">Day Streak 🔥</div></div>
+        <div class="streak-box"><span class="streak-num" id="workouts-done">0</span><div class="streak-label">Workouts Done</div></div>
+        <div class="streak-box"><span class="streak-num" id="weeks-consistent">0</span><div class="streak-label">Weeks Consistent</div></div>
+        <div class="streak-box"><span class="streak-num" id="program-pct">0<small style="font-size:22px">%</small></span><div class="streak-label">Program Progress</div></div>
+      </div>
+
+      <div class="tracker-card" style="margin-bottom:20px;">
+        <label>This Week — Click to Mark Day Complete</label>
+        <div class="week-progress" id="week-dots"></div>
+        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Tap any day to toggle completion. Green = done. Yellow = today.</div>
+      </div>
+
+      <div style="margin-bottom:12px;"><div class="section-eyebrow">Body Measurements</div></div>
+      <div class="tracker-grid" id="measurement-inputs"></div>
+      <button class="save-btn" onclick="saveMeasurements()" style="margin-bottom:32px;">💾 Save Measurements</button>
+
+      <div style="background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:32px;">
+        <table class="history-table" id="history-table">
+          <thead><tr><th>Date</th><th>Weight</th><th>Waist</th><th>Chest</th><th>Hips</th><th>Arm</th><th>Thigh</th></tr></thead>
+          <tbody id="history-tbody"><tr><td colspan="7" style="text-align:center; color:var(--muted); font-style:italic; padding:20px;">No measurements saved yet.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div style="margin-bottom:16px;"><div class="section-eyebrow">6-Month Timeline</div></div>
+      <div class="tracker-card">
+        <div style="display:grid; gap:16px;" id="month-bars"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ NUTRITION PAGE ════════════════ -->
+<div id="page-nutrition" class="page-section">
+  <div class="nutrition-section">
+    <div class="section-header" style="padding:0; margin-bottom:36px;">
+      <div class="section-eyebrow">Fuel Your Body</div>
+      <div class="section-title">Nutrition Guide</div>
+    </div>
+    <div class="nutrition-quote">"You cannot out-train a poor diet. Nutrition and exercise work together — both are non-negotiable."</div>
+    <div class="nutrition-grid">
+      <div class="nutrition-card"><h3>🥩 Protein</h3><p>Essential for muscle repair. Aim for adequate daily intake spread across meals.</p><ul><li>Target: 1.6–2g per kg bodyweight</li><li>Spread across 3–4 meals per day</li><li>Chicken, eggs, fish, legumes, tofu</li><li>Greek yogurt, cottage cheese</li><li>Protein shakes to supplement gaps</li></ul></div>
+      <div class="nutrition-card"><h3>💧 Hydration</h3><p>Water is the most underrated performance and recovery tool.</p><ul><li>Minimum 2.5–3 litres per day</li><li>Add 500ml per hour of exercise</li><li>Drink before you feel thirsty</li><li>Electrolytes on heavy training days</li><li>First glass every morning on waking</li></ul></div>
+      <div class="nutrition-card"><h3>😴 Sleep</h3><p>Muscle is built during sleep. Growth hormone peaks in deep sleep.</p><ul><li>Aim for 7–9 hours nightly</li><li>Consistent sleep/wake schedule</li><li>Avoid screens 1 hour before bed</li><li>Cool, dark bedroom environment</li><li>Avoid large meals within 2 hrs of bed</li></ul></div>
+      <div class="nutrition-card"><h3>🥗 Whole Foods</h3><p>Base your diet on minimally processed, nutrient-dense whole foods.</p><ul><li>Vegetables: fill half your plate</li><li>Fruits: 2–3 servings daily</li><li>Complex carbs: oats, rice, sweet potato</li><li>Healthy fats: avocado, nuts, olive oil</li><li>Minimise ultra-processed foods</li></ul></div>
+      <div class="nutrition-card"><h3>🍽️ Meal Timing</h3><p>When you eat matters, especially around training.</p><ul><li>Pre-workout: light meal 60–90 min before</li><li>Post-workout: protein + carbs within 60 min</li><li>3 main meals + 1–2 snacks daily</li><li>Don't skip breakfast on training days</li><li>Eat slowly and without distraction</li></ul></div>
+      <div class="nutrition-card"><h3>🧾 Portion Guide</h3><p>Use your hand as a portion tool — no scales needed.</p><ul><li>Protein: 1 palm per meal</li><li>Carbs: 1 cupped handful per meal</li><li>Vegetables: 2 fistfuls per meal</li><li>Fats: 1 thumb per meal</li><li>Adjust based on hunger and results</li></ul></div>
+    </div>
+    <div class="section-eyebrow" style="margin-bottom:14px;">Sample Daily Meals</div>
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:14px; margin-bottom:40px;">
+      <div class="tracker-card"><div style="color:var(--accent); font-family:var(--font-display); font-weight:700; font-size:16px; text-transform:uppercase; margin-bottom:10px;">🌅 Breakfast</div><p style="font-size:13px; color:var(--muted); line-height:1.7;">3 scrambled eggs + 1 cup oats with berries + 1 glass water. Protein for repair and carbs for energy.</p></div>
+      <div class="tracker-card"><div style="color:var(--accent); font-family:var(--font-display); font-weight:700; font-size:16px; text-transform:uppercase; margin-bottom:10px;">☀️ Lunch</div><p style="font-size:13px; color:var(--muted); line-height:1.7;">Grilled chicken + brown rice + steamed broccoli + olive oil. Balanced macros for afternoon training.</p></div>
+      <div class="tracker-card"><div style="color:var(--accent); font-family:var(--font-display); font-weight:700; font-size:16px; text-transform:uppercase; margin-bottom:10px;">🌙 Dinner</div><p style="font-size:13px; color:var(--muted); line-height:1.7;">Baked salmon + sweet potato + mixed salad + avocado. Omega-3s aid overnight muscle recovery.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ MOTIVATION PAGE ════════════════ -->
+<div id="page-motivation" class="page-section">
+  <div class="motivation-section">
+    <div class="motivation-inner">
+      <div class="section-eyebrow" style="margin-bottom:14px;">Daily Fuel</div>
+      <div class="quote-display" id="daily-quote">"The body achieves what the mind believes."</div>
+      <div class="quote-author" id="quote-author">— Napoleon Hill</div>
+      <button class="btn-ghost" onclick="nextQuote()" style="margin-bottom:40px; font-size:13px; padding:10px 20px;">Next Quote →</button>
+
+      <div class="section-eyebrow" style="margin-bottom:14px;">Coaching Principles</div>
+      <div class="tip-box"><h4>Tip 1 — Consistency Over Intensity</h4><p>Showing up every day at 70% beats showing up twice a week at 100%. The most powerful training variable is regularity. Build the habit first; intensity comes naturally with time.</p></div>
+      <div class="tip-box"><h4>Tip 2 — Track Everything</h4><p>What gets measured gets managed. Log your workouts, measurements, and how you feel. Patterns in your data reveal what's working and what to adjust.</p></div>
+      <div class="tip-box"><h4>Tip 3 — Sleep Is Training</h4><p>You don't build muscle in the gym — you break it down. Muscle is built during recovery and sleep. 7–9 hours of quality sleep is one of the highest-leverage actions you can take.</p></div>
+      <div class="tip-box"><h4>Tip 4 — Progress, Not Perfection</h4><p>Missing one workout doesn't ruin your progress. Missing ten in a row does. If you miss a session, simply continue the next day. The goal is a long-term habit, not a perfect record.</p></div>
+      <div class="tip-box"><h4>Tip 5 — Identity-Based Habits</h4><p>Instead of "I want to lose fat," say "I am someone who exercises daily." When your identity is tied to the behaviour, motivation becomes secondary — you act because of who you are.</p></div>
+      <div class="tip-box"><h4>Tip 6 — Nutrition Compounds</h4><p>A single good meal changes nothing. A single bad meal changes nothing. But 180 consistent days of high-quality nutrition stacked on your training compounds into extraordinary results.</p></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>BodyForge Pro — 6-Month Home Transformation Program</strong><br>
+  Built for anyone seeking real change using only bodyweight exercises.<br><br>
+  <em>⚕️ Always consult a healthcare professional before beginning any exercise program. This tool is for educational purposes only and does not constitute medical advice.</em>
+</footer>
+
+<script>
+// ════════════════════════════════════════════════
+// WORKOUT DATA
+// ════════════════════════════════════════════════
+const workoutData = {
+  monday: {
+    title: 'Monday', subtitle: 'Upper Body & Core',
+    exercises: [
+      { id:'m1', section:'circulation', sectionLabel:'Head & Neck Circulation', name:'Neck Rotations', purpose:'Promote circulation to the head and neck, reduce stiffness, improve mobility.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'8 each direction', duration:'60 sec', muscles:'Neck, Upper Trapezius', benefits:['Improved circulation','Better posture','Reduced stiffness','Better focus'], steps:['Sit or stand tall. Relax shoulders away from your ears.','Slowly turn your head RIGHT as far as comfortable. Hold briefly.','Return to centre, then slowly turn LEFT. Hold briefly.','Complete 8 rotations each direction. Move slowly — never force it.','Finish by returning to centre and taking a deep breath.'], caution:'Do not rotate rapidly or force range. Stop if you experience dizziness.', diagramType:'neck', targetAreas:['Neck','Upper Traps'], caloriesPerMin:2, restSeconds:30 },
+      { id:'m2', section:'circulation', name:'Chin Tucks', purpose:'Correct forward head posture, strengthen deep neck flexors, improve cervical alignment.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'10 reps', duration:'45 sec', muscles:'Deep Cervical Flexors', benefits:['Corrected posture','Reduced neck pain','Better spinal alignment'], steps:['Stand or sit tall. Look straight ahead, chin level.','Without tilting your head, gently draw your chin straight BACK (like a double chin).','Feel a gentle stretch at the base of your skull. Hold 2 seconds.','Slowly release. That is one repetition.','Complete 10 reps. Breathe normally. Keep movements slow.'], caution:'Do not tilt the head down or push chin forward on the return. Gentle only.', diagramType:'chin-tuck', targetAreas:['Deep Neck','Cervical Spine'], caloriesPerMin:2, restSeconds:30 },
+      { id:'m3', section:'warmup', sectionLabel:'Warm-Up', name:'Arm Swings', purpose:'Warm up shoulder joints, increase blood flow to upper body, prepare muscles for training.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'20 each direction', duration:'60 sec', muscles:'Shoulder Girdle, Chest, Upper Back', benefits:['Improved shoulder mobility','Increased blood flow','Reduced injury risk'], steps:['Stand with feet shoulder-width apart. Arms hang loose.','Swing both arms FORWARD and UP as high as comfortable, then BACK behind you.','After 10 swings, cross arms across chest in an X. Open wide. Repeat 10 times.','Keep core lightly engaged. Breathe rhythmically throughout.','Gradually increase the range of swing as you warm up.'], mistake:'Avoid swinging too fast or forcing range. Gentle, rhythmic movement.', diagramType:'arm-swings', targetAreas:['Shoulders','Chest'], caloriesPerMin:3, restSeconds:30 },
+      { id:'m4', section:'warmup', name:'Hip Circles', purpose:'Mobilise hip joints, warm up hip flexors and glutes, improve lower body range of motion.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'10 each direction', duration:'60 sec', muscles:'Hip Flexors, Glutes, Lower Back', benefits:['Better hip mobility','Reduced back stiffness','Injury prevention'], steps:['Stand hip-width apart. Hands on hips.','Slowly push hips RIGHT, then FORWARD, then LEFT, then BACK — drawing a circle.','Complete 10 clockwise circles, then 10 counter-clockwise.','Keep movements smooth. Gradually increase circle size.','Keep upper body still and feet flat throughout.'], mistake:'Do not rush or use jerky movements. Slow circles maximise mobility.', diagramType:'hip-circles', targetAreas:['Hips','Lower Back'], caloriesPerMin:3, restSeconds:30 },
+      { id:'m5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Jumping Jacks', purpose:'Elevate heart rate, burn calories, improve cardiovascular fitness and coordination.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'30 reps', duration:'45 sec', calories:'~8–10 cal/min', muscles:'Full Body — Legs, Shoulders, Core', benefits:['Fat reduction','Improved stamina','Better cardiovascular health','Coordination'], steps:['Stand with feet together, arms at sides.','Jump feet out to shoulder-width AS you raise both arms overhead.','Jump back to start. Land softly with slightly bent knees.','Maintain a steady rhythm. Keep core engaged throughout.','Beginners: step side-to-side instead of jumping to reduce impact.'], caution:'Land softly to protect joints. Step side-to-side if you have knee concerns.', diagramType:'jumping-jacks', targetAreas:['Legs','Shoulders','Core'], caloriesPerMin:9, restSeconds:45 },
+      { id:'m6', section:'fatloss', name:'High Knees', purpose:'Intense cardiovascular conditioning, strengthen hip flexors, elevate metabolic rate.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'20/leg',intermediate:'30/leg',advanced:'40/leg'}, duration:'30 sec', calories:'~10–13 cal/min', muscles:'Hip Flexors, Quads, Calves, Core', benefits:['High calorie burn','Improved coordination','Stronger core and hip flexors'], steps:['Stand tall. Arms bent 90° at sides.','Drive RIGHT knee toward chest while pumping LEFT arm forward.','Quickly alternate to LEFT knee, pumping RIGHT arm forward.','Move as fast as your control allows. Running-in-place motion.','Keep chest up, core tight, land on balls of feet.'], caution:'Start at walking pace if new to exercise. Increase speed gradually.', diagramType:'high-knees', targetAreas:['Hip Flexors','Quads','Calves','Core'], caloriesPerMin:11, restSeconds:45 },
+      { id:'m7', section:'muscle', sectionLabel:'Muscle Building', name:'Push-Ups', purpose:'Build chest, shoulder, and tricep strength and muscle using bodyweight resistance.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'8–10',intermediate:'12–15',advanced:'15–20'}, rest:'60–90 sec', muscles:'Chest, Triceps, Front Deltoids, Core', benefits:['Chest development','Shoulder strength','Tricep definition','Core stability'], steps:['High plank — hands slightly wider than shoulder-width. Body in a straight line.','Lower chest toward floor by bending elbows at 45° from your body.','Go as low as comfortable — ideally 1–2 cm from floor.','Push through palms to fully extend. That is one rep.','Keep core tight and hips LEVEL throughout. No sagging or piking.'], mistake:'Avoid flaring elbows wide (shoulder strain), sagging hips, partial range of motion.', diagramType:'push-up', targetAreas:['Chest','Triceps','Shoulders','Core'], caloriesPerMin:7, restSeconds:75 },
+      { id:'m8', section:'muscle', name:'Plank Hold', purpose:'Build core strength, improve spinal stability, strengthen deep abdominal muscles.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'20 sec',intermediate:'40 sec',advanced:'60 sec'}, rest:'60 sec', muscles:'Core, Obliques, Lower Back, Shoulders', benefits:['Core strength','Spinal stability','Improved posture','Reduced back pain'], steps:['Lower to forearms, elbows under your shoulders.','Extend both legs behind you. Rise onto balls of feet.','Body forms a STRAIGHT line from head to heels.','Engage core — imagine pulling belly button toward spine.','Hold position. Keep breathing. NEVER hold your breath.'], mistake:'Avoid hips sagging or piking up. Do not hold your breath.', diagramType:'plank', targetAreas:['Core','Lower Back','Shoulders'], caloriesPerMin:5, restSeconds:60 },
+      { id:'m9', section:'cooldown', sectionLabel:'Cool Down', name:"Child's Pose Stretch", purpose:'Decompress the spine, stretch the lower back, hips, and shoulders after training.', sets:{beginner:1,intermediate:1,advanced:1}, reps:'1 hold × 90 sec', duration:'60–90 sec', muscles:'Lower Back, Hips, Shoulders, Lats', benefits:['Spinal decompression','Hip flexor release','Reduced tension','Calm nervous system'], steps:['Kneel on floor. Sit back on your heels.','Reach both arms forward along the floor, lowering chest toward ground.','Rest forehead gently on the floor or a folded towel.','Hold 60–90 seconds. Breathe deeply. Relax with each exhale.','To finish, walk hands back and slowly sit upright.'], diagramType:'childs-pose', targetAreas:['Lower Back','Hips','Shoulders'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  },
+  tuesday: {
+    title: 'Tuesday', subtitle: 'Lower Body & Cardio',
+    exercises: [
+      { id:'t1', section:'circulation', sectionLabel:'Circulation', name:'Shoulder Rolls', purpose:'Release shoulder and upper back tension, improve circulation to the neck and shoulder region.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'10 fwd, 10 bwd', duration:'60 sec', muscles:'Trapezius, Rhomboids, Deltoids', benefits:['Reduced shoulder tension','Better posture','Improved circulation'], steps:['Stand tall, arms at sides.','Roll both shoulders FORWARD in a circular motion, 10 times.','Reverse and roll BACKWARD 10 times.','Make each circle as large and smooth as possible.','Breathe normally. Keep neck relaxed throughout.'], diagramType:'shoulder-rolls', targetAreas:['Shoulders','Upper Back'], caloriesPerMin:2, restSeconds:30 },
+      { id:'t2', section:'circulation', name:'Neck Side Bends', purpose:'Stretch the lateral neck muscles, reduce stiffness, improve cervical flexibility.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'8 each side', duration:'60 sec', muscles:'Sternocleidomastoid, Scalenes, Upper Traps', benefits:['Lateral neck flexibility','Reduced stiffness','Improved range of motion'], steps:['Stand or sit tall. Relax shoulders.','Slowly tilt RIGHT ear toward RIGHT shoulder. Do not raise the shoulder.','Hold 2 seconds. Feel stretch on left side of neck.','Return to centre, then tilt LEFT. Hold 2 seconds.','Complete 8 reps each side. Move slowly and gently.'], caution:'Never force beyond comfortable range. Stop if pain or dizziness occurs.', diagramType:'neck-side', targetAreas:['Lateral Neck','Upper Traps'], caloriesPerMin:2, restSeconds:30 },
+      { id:'t3', section:'warmup', sectionLabel:'Warm-Up', name:'Leg Swings', purpose:'Mobilise hip joints, warm up hamstrings and hip flexors for lower body training.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'15 each leg', duration:'60 sec', muscles:'Hip Flexors, Hamstrings, Glutes', benefits:['Hip mobility','Hamstring warm-up','Injury prevention'], steps:['Stand facing a wall. Both hands on wall for balance.','Swing RIGHT leg FORWARD and BACK in a smooth pendulum motion.','Keep spine neutral. Swinging leg relaxed.','Perform 15 swings, then switch to LEFT leg.','Gradually increase the arc as you warm up.'], diagramType:'leg-swings', targetAreas:['Hips','Hamstrings'], caloriesPerMin:3, restSeconds:30 },
+      { id:'t4', section:'warmup', name:'Ankle Circles', purpose:'Warm up ankle joints and calves to prevent injury during lower body exercises.', sets:{beginner:2,intermediate:2,advanced:2}, reps:'10 each direction per ankle', duration:'45 sec', muscles:'Ankle Stabilisers, Calves, Tibialis', benefits:['Ankle stability','Reduced injury risk','Better balance'], steps:['Sit or stand. Lift right foot slightly off floor.','Rotate ankle CLOCKWISE, 10 times.','Reverse for 10 COUNTER-CLOCKWISE circles.','Switch to LEFT ankle and repeat.','Make circles as large and smooth as possible.'], diagramType:'ankle-circles', targetAreas:['Ankles','Calves'], caloriesPerMin:2, restSeconds:30 },
+      { id:'t5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Mountain Climbers', purpose:'Full-body cardio that burns high calories, strengthens the core, and raises heart rate rapidly.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'20/leg',intermediate:'30/leg',advanced:'40/leg'}, duration:'30 sec', calories:'~10–14 cal/min', muscles:'Core, Shoulders, Hip Flexors, Quads', benefits:['High calorie burn','Core strength','Cardiovascular conditioning'], steps:['High push-up position. Hands under shoulders, body in a straight line.','Drive RIGHT knee toward chest, then return quickly.','Immediately drive LEFT knee forward. This is one rep.','Maintain fast, alternating running motion. Keep hips LEVEL.','Core braced. Breathe rhythmically throughout.'], caution:'Do not let hips rise above spine line. Maintain plank position throughout.', diagramType:'mountain-climbers', targetAreas:['Core','Shoulders','Hip Flexors'], caloriesPerMin:12, restSeconds:45 },
+      { id:'t6', section:'fatloss', name:'Fast Marching', purpose:'Accessible cardio that elevates heart rate and burns calories with low joint impact.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'40 steps', duration:'60 sec', calories:'~5–8 cal/min', muscles:'Hip Flexors, Quads, Glutes, Calves', benefits:['Calorie burning','Heart health','Low-impact cardio'], steps:['Stand tall. Arms bent 90°.','Lift RIGHT knee to hip height while pumping LEFT arm forward.','Lower it and immediately lift LEFT knee, pumping RIGHT arm.','March briskly — aim for 1 step/second or faster.','Keep core engaged and upright posture throughout.'], diagramType:'high-knees', targetAreas:['Legs','Core','Cardiovascular'], caloriesPerMin:6, restSeconds:45 },
+      { id:'t7', section:'muscle', sectionLabel:'Muscle Building', name:'Bodyweight Squats', purpose:'Build quad, glute, and hamstring strength. The fundamental lower body exercise.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'12',intermediate:'15–20',advanced:'25'}, rest:'60–90 sec', muscles:'Quads, Glutes, Hamstrings, Calves, Core', benefits:['Leg strength','Glute development','Improved athletic performance'], steps:['Feet shoulder-width apart, toes slightly turned out.','Arms out front or hands on chest for balance.','Push hips BACK and bend knees — lower until thighs are parallel (or as low as comfortable).','Drive through HEELS to rise. Squeeze glutes at the top.','Keep chest UP, knees tracking over toes, weight in heels.'], mistake:'Avoid knees caving inward, rounding back, or coming up on toes.', diagramType:'squat', targetAreas:['Quads','Glutes','Hamstrings','Core'], caloriesPerMin:6, restSeconds:75 },
+      { id:'t8', section:'muscle', name:'Glute Bridges', purpose:'Isolate and strengthen the glutes and hamstrings while protecting the lower back.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'12',intermediate:'15',advanced:'20'}, rest:'60 sec', muscles:'Glutes, Hamstrings, Lower Back, Core', benefits:['Glute strength','Reduced back pain risk','Hip stability'], steps:['Lie on your back. Knees bent, feet flat on floor hip-width apart.','Arms flat by sides, palms down.','Press through HEELS and squeeze glutes to lift hips toward ceiling.','Rise until body forms straight line from shoulders to knees. Hold 1–2 sec.','Slowly lower hips back to floor. That is one rep.'], mistake:'Do not push through the balls of your feet or overextend lower back.', diagramType:'glute-bridge', targetAreas:['Glutes','Hamstrings','Lower Back'], caloriesPerMin:5, restSeconds:60 },
+      { id:'t9', section:'cooldown', sectionLabel:'Cool Down', name:'Standing Quad Stretch', purpose:'Release the quadriceps and hip flexors after lower body training.', sets:{beginner:1,intermediate:1,advanced:1}, reps:'30–45 sec per side', duration:'30–45 sec/side', muscles:'Quadriceps, Hip Flexors', benefits:['Reduced soreness','Improved flexibility','Injury prevention'], steps:['Stand on LEFT leg. Hold wall if needed for balance.','Bend RIGHT knee and bring heel toward your glutes.','Grasp right ankle with right hand.','Stand TALL. Pull gently to increase stretch in front of thigh.','Hold 30–45 seconds each side.'], diagramType:'quad-stretch', targetAreas:['Quads','Hip Flexors'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  },
+  wednesday: {
+    title: 'Wednesday', subtitle: 'Core & Flexibility',
+    exercises: [
+      { id:'w1', section:'circulation', sectionLabel:'Circulation', name:'Cat-Cow Stretch', purpose:'Improve spinal mobility, promote circulation through the vertebral column, release back tension.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'10 full cycles', duration:'90 sec', muscles:'Entire Spine, Neck, Core', benefits:['Spinal mobility','Reduced back stiffness','Better posture'], steps:['On hands and knees. Hands under shoulders, knees under hips.','Inhale: drop belly toward floor, lift head and tailbone — COW.','Exhale: round spine toward ceiling, tuck chin and tailbone — CAT.','Flow slowly between positions. Let breath guide movement.','Complete 10 full cycles. Make each transition smooth.'], diagramType:'cat-cow', targetAreas:['Spine','Neck','Core'], caloriesPerMin:2, restSeconds:30 },
+      { id:'w2', section:'circulation', name:'Chin Tucks (Active)', purpose:'Strengthen deep neck flexors, improve cervical posture, activate neck stabilisers.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'12 reps', duration:'60 sec', muscles:'Deep Cervical Flexors', benefits:['Better neck alignment','Reduced headaches','Improved posture'], steps:['Sit tall. Looking straight ahead.','Draw chin STRAIGHT BACK (not down) — creating a double chin.','Optional: press two fingers lightly against chin as you retract.','Hold for 3 seconds. Release slowly.','Complete 12 reps. Breathe throughout.'], diagramType:'chin-tuck', targetAreas:['Deep Neck Flexors'], caloriesPerMin:2, restSeconds:30 },
+      { id:'w3', section:'warmup', sectionLabel:'Warm-Up', name:"World's Greatest Stretch", purpose:'Simultaneously warm up hips, thoracic spine, and hamstrings. An elite multi-joint warm-up.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'5 each side', duration:'90 sec', muscles:'Hips, Thoracic Spine, Hamstrings, Groin', benefits:['Full-body mobility','Hip opening','Thoracic rotation'], steps:['Push-up position. Step RIGHT foot outside RIGHT hand into a lunge.','Lower LEFT knee to floor. Front knee directly above ankle.','Place RIGHT elbow toward floor inside right foot. Hold 2 sec.','Rotate RIGHT arm toward ceiling. Follow with eyes. Hold 2 sec.','Return to push-up position and repeat on LEFT side.'], diagramType:'worlds-greatest', targetAreas:['Hips','Thoracic Spine','Hamstrings'], caloriesPerMin:4, restSeconds:30 },
+      { id:'w4', section:'warmup', name:'Inchworms', purpose:'Dynamically warm up the hamstrings, shoulders, and core through a full range of motion.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'8 reps', duration:'90 sec', muscles:'Hamstrings, Shoulders, Core, Calves', benefits:['Hamstring flexibility','Shoulder warm-up','Core activation'], steps:['Stand tall, feet hip-width.','Hinge at hips and place hands on floor in front of feet.','Walk hands FORWARD until in a push-up position.','Optional push-up. Then walk FEET toward hands.','Stand back up. That is one rep.'], diagramType:'inchworm', targetAreas:['Hamstrings','Shoulders','Core'], caloriesPerMin:4, restSeconds:30 },
+      { id:'w5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Skaters', purpose:'Lateral movement cardio that improves coordination, burns calories, and targets glutes.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'20 total (10/side)', duration:'45 sec', calories:'~9–12 cal/min', muscles:'Glutes, Quads, Calves, Adductors, Core', benefits:['Calorie burning','Lateral stability','Glute activation'], steps:['Stand on RIGHT leg with slight knee bend.','Leap SIDEWAYS to LEFT, landing on left foot. Swing right leg behind you.','Immediately leap back to RIGHT, landing on right foot.','Swing arms in OPPOSITE direction of the leap.','Land SOFTLY with bent knee each time.'], diagramType:'skaters', targetAreas:['Glutes','Quads','Adductors'], caloriesPerMin:10, restSeconds:45 },
+      { id:'w6', section:'fatloss', name:'Squat Pulses', purpose:'Sustained muscular endurance that keeps heart rate elevated and targets the legs.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'20 pulses', duration:'30 sec', calories:'~7–10 cal/min', muscles:'Quads, Glutes, Hamstrings', benefits:['Leg endurance','Calorie burning','Muscle toning'], steps:['Stand in squat position — thighs parallel to floor.','Hold this position and pulse UP and DOWN by about 10 cm.','Keep movement small and CONTINUOUS. Do not stand fully up.','Tight core. Upright chest throughout.','Complete 20 pulses then stand fully and rest.'], diagramType:'squat', targetAreas:['Quads','Glutes','Hamstrings'], caloriesPerMin:8, restSeconds:45 },
+      { id:'w7', section:'muscle', sectionLabel:'Muscle Building', name:'Superman Hold', purpose:'Strengthen the posterior chain — erector spinae, glutes, rear shoulders. Critical for posture.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'8 holds',intermediate:'10 holds',advanced:'12 holds'}, rest:'60 sec', muscles:'Erector Spinae, Glutes, Rear Deltoids, Hamstrings', benefits:['Lower back strength','Better posture','Spinal stability'], steps:['Lie face DOWN. Arms extended straight in front. Legs straight.','Simultaneously lift arms, chest, and legs off the floor.','Hold at top for 3 seconds. Squeeze glutes and upper back.','Slowly LOWER back to floor. That is one rep.','Inhale on way down. Exhale as you lift.'], mistake:'Do not strain your neck. Keep it neutral. Smooth, controlled lifting only.', diagramType:'superman', targetAreas:['Lower Back','Glutes','Rear Shoulders'], caloriesPerMin:5, restSeconds:60 },
+      { id:'w8', section:'muscle', name:'Side Plank', purpose:'Build lateral core stability, strengthen the obliques and hip abductors.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'15 sec/side',intermediate:'25 sec/side',advanced:'40 sec/side'}, rest:'60 sec', muscles:'Obliques, Hip Abductors, Core, Shoulder Stabilisers', benefits:['Lateral core strength','Oblique definition','Hip stability'], steps:['Lie on your RIGHT side. Stack left foot on right.','Prop up on right forearm — elbow under shoulder.','Lift hips off floor until body forms a straight diagonal.','Hold. Core braced. Breathe steadily.','Lower down, rest, then switch to LEFT side.'], diagramType:'side-plank', targetAreas:['Obliques','Hips','Core'], caloriesPerMin:5, restSeconds:60 },
+      { id:'w9', section:'cooldown', sectionLabel:'Cool Down', name:'Seated Forward Bend', purpose:'Deep stretch of the hamstrings and lower back after core and cardio work.', sets:{beginner:1,intermediate:1,advanced:1}, reps:'1 hold × 90 sec', duration:'60–90 sec', muscles:'Hamstrings, Lower Back, Calves', benefits:['Hamstring flexibility','Spinal decompression','Reduced tightness'], steps:['Sit on floor with both legs straight in front.','Sit TALL. Take a deep breath in.','Exhale and hinge forward at hips, reaching hands toward feet.','Go as far as comfortable. Hold the furthest point.','Breathe deeply for 60–90 sec. Relax deeper with each exhale.'], diagramType:'seated-forward', targetAreas:['Hamstrings','Lower Back','Calves'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  },
+  thursday: {
+    title: 'Thursday', subtitle: 'Back, Shoulders & Arms',
+    exercises: [
+      { id:'th1', section:'circulation', sectionLabel:'Circulation', name:'Arm Circles', purpose:'Warm up shoulder joints, improve circulation, mobilise the rotator cuff.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'15 fwd, 15 bwd', duration:'60 sec', muscles:'Deltoids, Rotator Cuff, Trapezius', benefits:['Shoulder mobility','Improved circulation','Rotator cuff health'], steps:['Feet shoulder-width apart. Extend arms straight out to sides.','Make small FORWARD circles with both arms simultaneously.','Gradually increase circle size over 10 reps.','REVERSE direction and repeat, going backward.','Keep neck relaxed and shoulders away from ears.'], caution:'Stop if you feel sharp pain or clicking. Reduce range if uncomfortable.', diagramType:'arm-circles', targetAreas:['Shoulders','Rotator Cuff'], caloriesPerMin:3, restSeconds:30 },
+      { id:'th2', section:'circulation', name:'Slow Neck Rotations', purpose:'Maintain cervical mobility, improve blood flow, reduce neck tension.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'6 each direction', duration:'60 sec', muscles:'Cervical Rotators, Sternocleidomastoid', benefits:['Cervical mobility','Reduced stiffness','Better focus'], steps:['Sit tall. Look straight ahead.','VERY SLOWLY turn head right as far as comfortable.','Pause 3 seconds. Slowly return to centre.','Turn slowly to LEFT. Pause 3 seconds. Return.','Complete 6 per side. Much slower than standard rotations.'], caution:'Do not roll head in a full circle. Only side-to-side rotation.', diagramType:'neck', targetAreas:['Neck','Upper Traps'], caloriesPerMin:2, restSeconds:30 },
+      { id:'th3', section:'warmup', sectionLabel:'Warm-Up', name:'Band Pull-Apart (Simulated)', purpose:'Activate the rear deltoids and rhomboids to prepare for back-focused training.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'15 reps', duration:'45 sec', muscles:'Rear Deltoids, Rhomboids, Mid-Trapezius', benefits:['Shoulder health','Better posture','Scapular stability'], steps:['Stand tall. Both arms straight out in front at shoulder height.','PRETEND you are holding a resistance band and pull it apart.','Move both arms OUT to sides and back — squeeze shoulder blades.','Hold retracted position 1 second. Return to front.','Focus on the squeezing feeling BETWEEN your shoulder blades.'], diagramType:'pull-apart', targetAreas:['Rear Deltoids','Rhomboids'], caloriesPerMin:3, restSeconds:30 },
+      { id:'th4', section:'warmup', name:'Scapular Push-Ups', purpose:'Activate the serratus anterior and improve scapular stability before pressing movements.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'12 reps', duration:'45 sec', muscles:'Serratus Anterior, Scapular Stabilisers', benefits:['Scapular health','Shoulder stability','Injury prevention'], steps:['Start in standard plank. Arms straight, core engaged.','Without bending elbows, let shoulder blades SQUEEZE together.','Then push upper back toward ceiling — SEPARATING the shoulder blades.','Very small movement — only shoulder blades move, not arms.','Complete 12 reps with control and focus.'], mistake:'Do not bend elbows. Shoulder blade-only movement, not a push-up.', diagramType:'scap-pushup', targetAreas:['Serratus','Scapular Stabilisers'], caloriesPerMin:3, restSeconds:30 },
+      { id:'th5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Burpees (Modified)', purpose:'Full-body explosive exercise with extremely high calorie burn and cardiovascular demand.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'5',intermediate:'8',advanced:'12'}, duration:'45 sec', calories:'~12–16 cal/min', muscles:'Full Body', benefits:['Maximum calorie burn','Total body conditioning','Cardiovascular power'], steps:['Stand tall, feet shoulder-width.','Drop hands to floor in front of feet.','Jump or STEP both feet back into push-up position.','Optional push-up. Jump/step feet BACK to hands.','Explode UPWARD into a jump with arms overhead. Land softly.'], caution:'Beginners: step instead of jumping both at bottom and top. Build intensity gradually.', diagramType:'burpee', targetAreas:['Full Body'], caloriesPerMin:13, restSeconds:60 },
+      { id:'th6', section:'fatloss', name:'Step-Ups', purpose:'Low-impact cardio targeting the glutes and legs while keeping heart rate elevated.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'20 total (10/leg)', duration:'60 sec', calories:'~7–10 cal/min', muscles:'Glutes, Quads, Hamstrings, Calves', benefits:['Glute activation','Cardiovascular conditioning','Low joint impact'], steps:['Stand facing a step, stair, or sturdy chair.','Step up with RIGHT foot, pressing through HEEL to drive body up.','Bring LEFT foot up to join it on the step.','Step DOWN with right foot, then left.','Alternate leading foot each time. Upright posture throughout.'], caution:'Ensure the step is stable and secure. Do not lean forward excessively.', diagramType:'step-up', targetAreas:['Glutes','Quads','Calves'], caloriesPerMin:8, restSeconds:45 },
+      { id:'th7', section:'muscle', sectionLabel:'Muscle Building', name:'Pike Push-Ups', purpose:'Target the shoulders and triceps in a bodyweight overhead pressing pattern.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'6–8',intermediate:'10–12',advanced:'15'}, rest:'90 sec', muscles:'Anterior Deltoids, Triceps, Upper Chest', benefits:['Shoulder development','Tricep strength','Foundation for handstand push-ups'], steps:['Push-up position. Walk feet toward hands until hips form an inverted V.','Keep legs as straight as possible. Back flat.','Bend elbows to lower the CROWN of your head toward the floor.','Push through palms to return to inverted V. That is one rep.','Core tight throughout. Do not let hips drop.'], diagramType:'pike-pushup', targetAreas:['Shoulders','Triceps','Upper Chest'], caloriesPerMin:7, restSeconds:90 },
+      { id:'th8', section:'muscle', name:'Reverse Snow Angels', purpose:'Target the entire posterior chain — critical for posture correction.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'10',intermediate:'12',advanced:'15'}, rest:'60 sec', muscles:'Lower Traps, Rhomboids, Rear Deltoids, Lower Back', benefits:['Postural correction','Shoulder blade control','Upper back strength'], steps:['Lie face DOWN. Arms at sides, palms facing down.','Lift chest SLIGHTLY off floor. Keep neck neutral.','Sweep arms FORWARD (snow angel in reverse) until overhead.','Return slowly by sweeping arms BACK to sides.','Keep movement slow and controlled. Squeeze shoulder blades.'], mistake:'Do not strain neck by looking up excessively. Neutral spine throughout.', diagramType:'reverse-angel', targetAreas:['Upper Back','Rear Deltoids','Lower Traps'], caloriesPerMin:5, restSeconds:60 },
+      { id:'th9', section:'cooldown', sectionLabel:'Cool Down', name:'Doorway Chest Stretch', purpose:'Open the chest and stretch the anterior deltoids after shoulder training.', sets:{beginner:1,intermediate:1,advanced:1}, reps:'1 hold × 60 sec', duration:'45–60 sec', muscles:'Pectorals, Anterior Deltoids, Biceps', benefits:['Chest opening','Posture improvement','Flexibility'], steps:['Stand in a doorway. Place forearms on frame at shoulder height.','Step one foot FORWARD through the doorway.','Lean gently forward until you feel stretch across chest.','Hold 45–60 seconds. Breathe deeply.','To deepen: raise arms slightly higher on frame.'], diagramType:'chest-stretch', targetAreas:['Chest','Shoulders'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  },
+  friday: {
+    title: 'Friday', subtitle: 'Full Body Circuit',
+    exercises: [
+      { id:'f1', section:'circulation', sectionLabel:'Circulation', name:'Seated Forward Bend', purpose:'Stimulate circulation through the entire spine. Prepare the nervous system for training.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'5 slow breath cycles', duration:'90 sec', muscles:'Spinal Erectors, Hamstrings, Neck', benefits:['Spinal circulation','Nervous system activation','Hamstring flexibility'], steps:['Sit tall on floor, legs extended.','Inhale and GROW taller in your spine.','Exhale and slowly FOLD forward, reaching toward feet.','Hold forward position for 3 breaths, then inhale back up.','Repeat 5 times, going slightly deeper each cycle.'], diagramType:'seated-forward', targetAreas:['Spine','Hamstrings'], caloriesPerMin:2, restSeconds:30 },
+      { id:'f2', section:'circulation', name:'Shoulder Rolls', purpose:"Release shoulder girdle tension accumulated from the week's training.", sets:{beginner:2,intermediate:3,advanced:3}, reps:'10 fwd, 10 bwd', duration:'60 sec', muscles:'Trapezius, Deltoids, Rhomboids', benefits:['Tension release','Shoulder mobility','Posture reset'], steps:['Stand tall, arms relaxed.','Slowly roll both shoulders FORWARD in wide circles, 10 times.','Pause and REVERSE, rolling backward 10 times.','Increase circle size gradually.','Finish with a deep breath and shoulder squeeze back.'], diagramType:'shoulder-rolls', targetAreas:['Shoulders','Upper Back'], caloriesPerMin:2, restSeconds:30 },
+      { id:'f3', section:'warmup', sectionLabel:'Warm-Up', name:'Dynamic Lunge with Twist', purpose:'Warm up the entire lower body and thoracic spine simultaneously.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'8 each side', duration:'90 sec', muscles:'Quads, Hip Flexors, Glutes, Thoracic Spine', benefits:['Full body warm-up','Hip opening','Spinal rotation'], steps:['Step forward into lunge with RIGHT foot. Lower back knee toward floor.','Place LEFT hand on floor beside right foot for balance.','Raise RIGHT arm toward ceiling, ROTATING thoracic spine.','Return arm. Step back. Then lunge with LEFT foot.','Keep movement smooth. Do not twist if it causes discomfort.'], diagramType:'lunge-twist', targetAreas:['Hips','Quads','Thoracic Spine'], caloriesPerMin:4, restSeconds:30 },
+      { id:'f4', section:'warmup', name:'Lateral Side Shuffles', purpose:'Increase heart rate, warm up adductors and glutes, activate lateral movement patterns.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'20 total (10 each way)', duration:'60 sec', muscles:'Adductors, Glutes, Quads, Calves', benefits:['Heart rate elevation','Lateral preparation','Glute activation'], steps:['Feet shoulder-width, knees slightly bent.','Step RIGHT foot to right, bring LEFT foot to meet it.','Continue shuffling RIGHT for 5 steps, then LEFT for 5 steps.','Keep weight LOW. Stay light on your feet.','Increase speed as you warm up.'], diagramType:'shuffles', targetAreas:['Adductors','Glutes','Quads'], caloriesPerMin:5, restSeconds:30 },
+      { id:'f5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Jumping Jacks', purpose:'Full-body cardio to elevate heart rate and burn calories as part of the weekly circuit.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'40 reps', duration:'60 sec', calories:'~8–10 cal/min', muscles:'Full Body', benefits:['Calorie burn','Cardiovascular health','Coordination'], steps:['Feet together, arms at sides.','Jump feet out and raise arms overhead simultaneously.','Jump back to start.','Land SOFTLY with bent knees every time.','Steady, controlled rhythm throughout.'], diagramType:'jumping-jacks', targetAreas:['Full Body'], caloriesPerMin:9, restSeconds:45 },
+      { id:'f6', section:'fatloss', name:'Mountain Climbers', purpose:'High-intensity core and cardio combination to finish fat-loss section with maximum intensity.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'20/leg',intermediate:'30/leg',advanced:'40/leg'}, duration:'30 sec', calories:'~10–14 cal/min', muscles:'Core, Shoulders, Hip Flexors, Quads', benefits:['High calorie burn','Core strength','Cardiovascular endurance'], steps:['High push-up position. Body in a straight line.','Drive RIGHT knee toward chest quickly.','Return and immediately drive LEFT knee forward.','Fast alternating motion.','Hips LEVEL throughout.'], diagramType:'mountain-climbers', targetAreas:['Core','Shoulders','Hip Flexors'], caloriesPerMin:12, restSeconds:45 },
+      { id:'f7', section:'muscle', sectionLabel:'Muscle Building', name:'Lunges', purpose:'Single-leg strength that builds quads, glutes, and improves balance and coordination.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'8/leg',intermediate:'12/leg',advanced:'15/leg'}, rest:'60–90 sec', muscles:'Quads, Glutes, Hamstrings, Calves, Core', benefits:['Single-leg strength','Balance improvement','Glute development'], steps:['Stand tall, feet hip-width.','Step FORWARD with right foot into lunge. Lower left knee toward floor.','Right thigh parallel to floor. Right knee over right ankle.','Push through RIGHT heel to return to standing.','Complete all reps one side then switch, or alternate.'], mistake:'Do not let front knee track past toes. Torso upright, not leaning forward.', diagramType:'lunge', targetAreas:['Quads','Glutes','Hamstrings'], caloriesPerMin:6, restSeconds:75 },
+      { id:'f8', section:'muscle', name:'Wall Sit', purpose:'Build quad endurance and strength through an isometric (static) hold.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'20 sec',intermediate:'35 sec',advanced:'60 sec'}, rest:'60 sec', muscles:'Quads, Glutes, Calves, Core', benefits:['Quad endurance','Joint stability','Muscle tone','Low impact'], steps:['Back flat against wall. Feet shoulder-width.','Slide back DOWN wall until thighs are parallel to floor.','Knees directly above ankles — not further forward.','Hold. Back FLAT against wall throughout.','To finish, slide back UP wall to standing.'], mistake:'Do not let knees creep past toes. Maintain 90-degree knee angle.', diagramType:'wall-sit', targetAreas:['Quads','Glutes','Core'], caloriesPerMin:5, restSeconds:60 },
+      { id:'f9', section:'cooldown', sectionLabel:'Cool Down', name:'Lying Spinal Twist', purpose:"Release spinal tension from the week's training. A deep restorative stretch.", sets:{beginner:1,intermediate:1,advanced:1}, reps:'45–60 sec per side', duration:'45–60 sec/side', muscles:'Thoracic Spine, Lower Back, Obliques, Hips', benefits:['Spinal decompression','Lower back release','Parasympathetic activation'], steps:['Lie on back. Arms extended out to sides, palms down.','Draw RIGHT knee toward chest.','Cross right knee OVER body to left side, let it rest on floor.','Keep both shoulder blades on floor. Look to the RIGHT.','Hold 45–60 seconds. Switch sides.'], diagramType:'spinal-twist', targetAreas:['Lower Back','Thoracic Spine','Hips'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  },
+  saturday: {
+    title: 'Saturday', subtitle: 'Lower Body & Posterior Chain',
+    exercises: [
+      { id:'s1', section:'circulation', sectionLabel:'Circulation', name:'Cobra Stretch', purpose:'Open the chest and cervical spine, counteract forward flexion posture.', sets:{beginner:2,intermediate:3,advanced:3}, reps:'8 pulses + 1 hold', duration:'90 sec', muscles:'Cervical Extensors, Thoracic Extensors, Abdominals', benefits:['Chest opening','Spinal extension','Posture correction'], steps:['Lie face down. Hands under shoulders.','Slowly press up, lifting chest off floor while keeping hips down.','Look forward or slightly up. Do not compress back of neck.','Hold 3 seconds, lower, and repeat 8 times. On 9th, hold 20 seconds.','Keep elbows SLIGHTLY bent. Do not fully lock out.'], caution:'Those with lower back issues should perform gently and stop if pain occurs.', diagramType:'cobra', targetAreas:['Thoracic Spine','Cervical Spine','Abs'], caloriesPerMin:2, restSeconds:30 },
+      { id:'s2', section:'circulation', name:'Neck Side Bends', purpose:"Release lateral neck tension from the week, improve cervical flexibility heading into rest day.", sets:{beginner:2,intermediate:3,advanced:3}, reps:'10 each side', duration:'60 sec', muscles:'Sternocleidomastoid, Scalenes, Upper Traps', benefits:['Neck flexibility','Tension release','Better sleep preparation'], steps:['Sit or stand tall. Hands relaxed.','Slowly tilt RIGHT ear toward RIGHT shoulder. Do not raise shoulder.','Hold 3 seconds. Feel stretch along LEFT side of neck.','Return to centre. Tilt LEFT. Hold 3 seconds.','Complete 10 per side. Slow, controlled movements.'], diagramType:'neck-side', targetAreas:['Lateral Neck','Scalenes'], caloriesPerMin:2, restSeconds:30 },
+      { id:'s3', section:'warmup', sectionLabel:'Warm-Up', name:'Glute Activation Walks', purpose:'Specifically activate the gluteal muscles before lower body and posterior chain training.', sets:{beginner:2,intermediate:2,advanced:3}, reps:'15 each direction', duration:'60 sec', muscles:'Glute Medius, Glute Maximus, Hip Abductors', benefits:['Glute activation','Hip stability','Better squat performance'], steps:['Feet hip-width. Quarter-squat position.','Take a step to RIGHT, feet facing forward.','Bring left foot in to restore hip width. Continue 15 steps RIGHT.','REVERSE and walk 15 steps LEFT.','Keep squat position throughout. Do not pop up between steps.'], diagramType:'glute-walk', targetAreas:['Glute Medius','Hip Abductors'], caloriesPerMin:3, restSeconds:30 },
+      { id:'s4', section:'warmup', name:'Knee Circles', purpose:'Mobilise the knee joint and warm up supporting structures before loaded leg movements.', sets:{beginner:2,intermediate:2,advanced:2}, reps:'10 each direction, each knee', duration:'60 sec', muscles:'Knee Stabilisers, Quads, Hamstrings', benefits:['Knee mobility','Joint lubrication','Injury prevention'], steps:['Feet together. Bend knees. Both hands on kneecaps.','Slowly rotate knees CLOCKWISE — guiding with hands.','Complete 10 clockwise circles, then 10 counter-clockwise.','Straighten up — does your range feel improved?','Keep feet flat. Avoid locking knees fully.'], diagramType:'knee-circles', targetAreas:['Knees','Quads','Hamstrings'], caloriesPerMin:2, restSeconds:30 },
+      { id:'s5', section:'fatloss', sectionLabel:'Fat Loss Cardio', name:'Skaters', purpose:'Lateral cardio that targets glutes, improves coordination, and burns significant calories.', sets:{beginner:2,intermediate:3,advanced:4}, reps:'30 total (15/side)', duration:'45 sec', calories:'~9–12 cal/min', muscles:'Glutes, Quads, Adductors, Calves', benefits:['Lateral power','Glute development','Calorie burning'], steps:['Stand on LEFT leg, knee slightly bent.','Leap to RIGHT, landing on right foot. Swing left leg behind.','Swing arms in OPPOSITE direction of leap.','Immediately leap back to LEFT.','Find a rhythm. Land SOFTLY each time.'], diagramType:'skaters', targetAreas:['Glutes','Quads','Adductors'], caloriesPerMin:10, restSeconds:45 },
+      { id:'s6', section:'fatloss', name:'High Knees', purpose:'Finish fat loss section with high-intensity cardiovascular work targeting hip flexors.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'25/leg',intermediate:'35/leg',advanced:'45/leg'}, duration:'30 sec', calories:'~10–13 cal/min', muscles:'Hip Flexors, Quads, Calves, Core', benefits:['High calorie burn','Hip flexor strength','Cardiovascular endurance'], steps:['Stand tall. Arms bent 90° at sides.','Drive RIGHT knee toward chest. Pump LEFT arm forward.','Drive LEFT knee up. Pump RIGHT arm forward.','Move as fast as your control allows.','Land on balls of feet throughout.'], diagramType:'high-knees', targetAreas:['Hip Flexors','Quads','Calves'], caloriesPerMin:11, restSeconds:45 },
+      { id:'s7', section:'muscle', sectionLabel:'Muscle Building', name:'Single-Leg Glute Bridge', purpose:'Advanced glute isolation that increases strength and identifies imbalances between sides.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'8/side',intermediate:'12/side',advanced:'15/side'}, rest:'60–90 sec', muscles:'Glutes, Hamstrings, Core, Hip Stabilisers', benefits:['Glute strength','Hip balance','Core stability'], steps:['Lie on back. Both feet flat on floor. Knees bent.','Extend RIGHT leg straight up toward ceiling.','Press through LEFT heel to lift hips off floor.','Body forms straight line from shoulder to raised knee at top.','Hold 2 seconds. Lower SLOWLY. Complete all reps then switch.'], mistake:'Do not allow hips to rotate or drop on the non-working side.', diagramType:'single-bridge', targetAreas:['Glutes','Hamstrings','Core'], caloriesPerMin:5, restSeconds:75 },
+      { id:'s8', section:'muscle', name:'Calf Raises', purpose:'Strengthen the gastrocnemius and soleus for lower leg definition and ankle stability.', sets:{beginner:2,intermediate:3,advanced:4}, reps:{beginner:'15',intermediate:'20',advanced:'25'}, rest:'45 sec', muscles:'Gastrocnemius, Soleus, Ankle Stabilisers', benefits:['Calf strength','Ankle stability','Lower leg definition'], steps:['Feet hip-width. Near wall for balance support.','Rise up onto BALLS of both feet as high as possible.','Hold at TOP for 1 second.','SLOWLY lower heels back to floor — take 3 seconds on way down.','The slow lowering builds more strength. Do not rush it.'], mistake:'Do not bounce at top or bottom. Control the full range.', diagramType:'calf-raise', targetAreas:['Calves','Ankles'], caloriesPerMin:4, restSeconds:45 },
+      { id:'s9', section:'cooldown', sectionLabel:'Cool Down', name:'Pigeon Pose Stretch', purpose:'Deep hip flexor and glute stretch — essential preparation for the upcoming rest day.', sets:{beginner:1,intermediate:1,advanced:1}, reps:'60–90 sec per side', duration:'60–90 sec/side', muscles:'Hip Flexors, Glutes (Piriformis), IT Band, Groin', benefits:['Hip flexibility','Glute release','Reduced lower back tension'], steps:['From push-up position, bring RIGHT knee forward toward right wrist.','Extend LEFT leg straight behind you. Lower hips toward floor.','If flexible, fold FORWARD over right leg, rest on forearms.','Hold 60–90 seconds. Breathe deeply. Let hip relax each exhale.','Return to push-up position and switch sides.'], diagramType:'pigeon', targetAreas:['Glutes','Hip Flexors','IT Band'], caloriesPerMin:2, restSeconds:0 }
+    ]
+  }
+};
+
+// ════════════════════════════════════════════════
+// SVG DIAGRAMS (compact version)
+// ════════════════════════════════════════════════
+function getDiagramSVG(type, section) {
+  const c = { circulation:'#4ade80', warmup:'#fbbf24', fatloss:'#ff6b35', muscle:'#e8ff47', cooldown:'#94a3b8' };
+  const col = c[section] || '#e8ff47';
+  const d = {
+    'neck': `<svg viewBox="0 0 200 240" class="diagram-svg"><circle cx="100" cy="50" r="30" fill="#2a3040" stroke="${col}" stroke-width="2"/><rect x="88" y="78" width="24" height="30" rx="5" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><ellipse cx="100" cy="140" rx="40" ry="50" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M70 90 Q58 120 60 155" stroke="#2a3040" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M130 90 Q142 120 140 155" stroke="#2a3040" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M80 188 Q78 215 80 230" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M120 188 Q122 215 120 230" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M70 40 A35 35 0 0 1 130 40" stroke="${col}" stroke-width="2" fill="none" stroke-dasharray="4 3"/><path d="M125 45 L135 40 L128 35" fill="${col}"/><text x="100" y="222" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Rotate both directions</text></svg>`,
+    'chin-tuck': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="50" r="28" fill="#2a3040" stroke="${col}" stroke-width="2"/><rect x="89" y="76" width="22" height="28" rx="5" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><ellipse cx="100" cy="140" rx="38" ry="44" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M115 58 L105 65" stroke="${col}" stroke-width="2" fill="none"/><circle cx="118" cy="56" r="3" fill="${col}"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Draw chin straight back</text></svg>`,
+    'arm-swings': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="40" r="22" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="110" rx="34" ry="44" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M66 78 L28 82" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M134 78 L172 82" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M35 78 Q22 55 35 40" stroke="${col}" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/><path d="M165 78 Q178 55 165 40" stroke="${col}" stroke-width="1.5" fill="none" stroke-dasharray="4 3"/><text x="100" y="192" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Swing forward &amp; back</text></svg>`,
+    'hip-circles': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="110" rx="34" ry="50" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><ellipse cx="100" cy="118" rx="24" ry="16" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><path d="M120 108 L125 103 L122 116" fill="${col}"/><text x="100" y="192" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Circles both directions</text></svg>`,
+    'jumping-jacks': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="110" rx="30" ry="44" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><path d="M70 76 Q40 60 28 45" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M130 76 Q160 60 172 45" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M82 152 Q60 185 50 200" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M118 152 Q140 185 150 200" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Arms up + legs out</text></svg>`,
+    'high-knees': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="110" rx="30" ry="44" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><path d="M70 76 Q48 100 44 130" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M130 76 Q158 90 162 115" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M82 152 Q84 185 82 200" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M108 150 Q128 135 140 132" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Drive knee up alternating</text></svg>`,
+    'push-up': `<svg viewBox="0 0 200 140" class="diagram-svg"><circle cx="50" cy="42" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M60 55 L145 65" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M38 55 L28 80" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M28 80 L24 95" stroke="${col}" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M145 65 L155 80" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M155 80 L158 95" stroke="${col}" stroke-width="10" stroke-linecap="round" fill="none"/><text x="100" y="128" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lower chest · Press up</text></svg>`,
+    'plank': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="50" cy="55" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M60 65 L155 70" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M40 65 L25 85" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M155 70 L160 90" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><rect x="80" y="56" width="60" height="14" rx="4" fill="${col}" opacity="0.15"/><text x="110" y="66" text-anchor="middle" fill="${col}" font-size="9" font-family="sans-serif" font-weight="bold">CORE TIGHT</text><text x="100" y="120" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Hold position · Breathe</text></svg>`,
+    'squat': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M100 55 L100 110" stroke="${col}" stroke-width="24" stroke-linecap="round" fill="none"/><path d="M85 110 Q72 145 80 175" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M115 110 Q128 145 120 175" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M70 130 L130 130" stroke="${col}" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.5"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Hips back · Chest up</text></svg>`,
+    'glute-bridge': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="40" cy="70" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M55 78 L100 70" stroke="#2a3040" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M100 70 L135 55" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M135 55 L165 75" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M165 75 L175 105" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/><text x="100" y="125" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Press heels · Drive hips up</text></svg>`,
+    'lunge': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="88" cy="35" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M88 54 L90 105" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M80 105 Q68 145 60 185" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M100 105 Q126 140 145 165" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><text x="100" y="198" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Step forward · Knee 90°</text></svg>`,
+    'wall-sit': `<svg viewBox="0 0 200 180" class="diagram-svg"><rect x="165" y="10" width="12" height="180" rx="3" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><circle cx="90" cy="42" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M90 60 L90 110" stroke="#2a3040" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M90 60 L165 60" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M90 110 L162 110" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M162 110 L162 165" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M90 110 L90 165" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><text x="95" y="178" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Back flat against wall</text></svg>`,
+    'superman': `<svg viewBox="0 0 200 110" class="diagram-svg"><circle cx="100" cy="48" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M100 62 L100 90" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M40 56 Q70 52 90 58" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M110 58 Q130 52 160 56" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M80 90 Q74 102 70 112" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M120 90 Q126 102 130 112" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><text x="100" y="125" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lift arms, chest &amp; legs</text></svg>`,
+    'side-plank': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="55" cy="60" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M65 70 L150 90" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M55 76 L52 105" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M150 90 L152 120" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><text x="100" y="128" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Body straight · Hips up</text></svg>`,
+    'mountain-climbers': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="42" cy="42" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M52 52 L148 62" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M148 62 L158 75" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M36 52 L26 72" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M135 62 Q120 50 105 58 Q100 52 98 46" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M100 44 L104 35 L108 44" fill="${col}"/><text x="100" y="115" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Alternate knees · Hips level</text></svg>`,
+    'cat-cow': `<svg viewBox="0 0 200 110" class="diagram-svg"><circle cx="42" cy="42" r="14" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M56 50 L155 55" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M52 48 L45 76" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M155 55 L158 78" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M60 54 Q108 75 155 60" stroke="${col}" stroke-width="2" fill="none" opacity="0.8" stroke-dasharray="4 3"/><text x="100" y="105" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Inhale cow · Exhale cat</text></svg>`,
+    'cobra': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="52" cy="58" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M62 70 L148 112" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M46 70 L38 92" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><text x="100" y="118" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lift chest · Hips on floor</text></svg>`,
+    'shoulder-rolls': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="120" rx="40" ry="52" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><ellipse cx="65" cy="82" rx="18" ry="12" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3" transform="rotate(-15 65 82)"/><ellipse cx="135" cy="82" rx="18" ry="12" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3" transform="rotate(15 135 82)"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Roll fwd then backward</text></svg>`,
+    'neck-side': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="50" r="28" fill="#2a3040" stroke="${col}" stroke-width="2"/><rect x="89" y="76" width="22" height="26" rx="5" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><ellipse cx="100" cy="150" rx="40" ry="52" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M100 42 Q118 38 126 50" stroke="${col}" stroke-width="2" fill="none" stroke-dasharray="4 3"/><path d="M122 48 L130 44 L126 54" fill="${col}"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Tilt ear toward shoulder</text></svg>`,
+    'arm-circles': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="120" rx="34" ry="48" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M66 78 L28 82" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M134 78 L172 82" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="26" cy="90" rx="18" ry="18" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><ellipse cx="174" cy="90" rx="18" ry="18" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Small to large circles</text></svg>`,
+    'burpee': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="100" cy="24" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M85 40 L76 72" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M115 40 L124 72" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M76 72 L66 90" stroke="${col}" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M124 72 L134 90" stroke="${col}" stroke-width="10" stroke-linecap="round" fill="none"/><path d="M100 15 L100 5" stroke="${col}" stroke-width="2"/><path d="M95 8 L100 2 L105 8" fill="${col}"/><text x="100" y="125" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Drop · Plank · Jump up</text></svg>`,
+    'seated-forward': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="45" cy="60" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M48 76 L65 95" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M65 95 L165 98" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M50 72 Q80 88 130 94" stroke="${col}" stroke-width="2" fill="none" stroke-dasharray="4 3" opacity="0.6"/><text x="100" y="125" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Reach forward · Hold</text></svg>`,
+    'spinal-twist': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="55" cy="55" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M55 72 L120 78" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M120 78 L150 50" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M20 60 L50 60" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><text x="100" y="115" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Cross knee · Shoulders flat</text></svg>`,
+    'quad-stretch': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="115" rx="32" ry="52" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M80 166 Q78 195 80 200" stroke="#2a3040" stroke-width="15" stroke-linecap="round" fill="none"/><path d="M120 166 Q125 145 128 120 Q130 100 120 82" stroke="${col}" stroke-width="15" stroke-linecap="round" fill="none"/><text x="100" y="218" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Heel to glute · Stand tall</text></svg>`,
+    'childs-pose': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="158" cy="45" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M148 58 L35 68" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M148 68 L145 100" stroke="#2a3040" stroke-width="16" stroke-linecap="round" fill="none"/><text x="100" y="118" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Reach forward · Forehead down</text></svg>`,
+    'chest-stretch': `<svg viewBox="0 0 200 200" class="diagram-svg"><rect x="88" y="10" width="12" height="200" rx="4" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><circle cx="115" cy="55" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="120" cy="130" rx="30" ry="46" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M96 82 L86 115" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><text x="130" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lean into doorway</text></svg>`,
+    'pigeon': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="50" cy="55" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M58 68 L100 78" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M100 78 Q115 88 130 88" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M100 78 Q108 95 120 108" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><ellipse cx="108" cy="90" rx="16" ry="10" fill="${col}" opacity="0.3" transform="rotate(30 108 90)"/><text x="100" y="118" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Hip to floor · Breathe</text></svg>`,
+    'reverse-angel': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="100" cy="48" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M100 62 L100 90" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M100 75 L42 62" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M100 75 L158 62" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><text x="100" y="115" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Sweep arms back from overhead</text></svg>`,
+    'step-up': `<svg viewBox="0 0 200 180" class="diagram-svg"><rect x="80" y="118" width="90" height="22" rx="4" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><rect x="80" y="140" width="90" height="30" rx="4" fill="#1a2030" stroke="#3a4050" stroke-width="1"/><circle cx="80" cy="50" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="80" cy="100" rx="30" ry="44" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M70 140 Q72 128 76 118" stroke="${col}" stroke-width="15" stroke-linecap="round" fill="none"/><text x="95" y="175" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Press through heel to rise</text></svg>`,
+    'skaters': `<svg viewBox="0 0 200 180" class="diagram-svg"><circle cx="115" cy="45" r="20" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M115 63 L118 105" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M108 105 Q100 140 88 170" stroke="${col}" stroke-width="15" stroke-linecap="round" fill="none"/><path d="M35 105 L165 105" stroke="${col}" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/><path d="M165 98 L175 105 L165 112" fill="${col}" opacity="0.7"/><path d="M35 112 L25 105 L35 98" fill="${col}" opacity="0.7"/><text x="100" y="178" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Leap side to side · Land softly</text></svg>`,
+    'pull-apart': `<svg viewBox="0 0 200 160" class="diagram-svg"><circle cx="100" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="100" rx="32" ry="46" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M68 78 L30 80" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M132 78 L170 80" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M30 76 L22 72 L28 84" fill="${col}"/><path d="M170 76 L178 72 L172 84" fill="${col}"/><text x="100" y="158" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Pull apart · Squeeze blades</text></svg>`,
+    'single-bridge': `<svg viewBox="0 0 200 130" class="diagram-svg"><circle cx="40" cy="65" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M55 75 L100 65" stroke="#2a3040" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M100 65 L138 50" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M138 50 L150 28" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M138 50 L168 70" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><text x="100" y="128" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Single leg · Drive hips high</text></svg>`,
+    'glute-walk': `<svg viewBox="0 0 200 160" class="diagram-svg"><circle cx="100" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="100" rx="34" ry="46" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M26 128 L175 128" stroke="${col}" stroke-width="1.5" stroke-dasharray="5 3" opacity="0.4"/><path d="M170 121 L180 128 L170 135" fill="${col}" opacity="0.7"/><text x="100" y="155" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Stay low · Side-step with control</text></svg>`,
+    'inchworm': `<svg viewBox="0 0 200 110" class="diagram-svg"><circle cx="30" cy="38" r="14" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M36 50 L65 80" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M65 80 L145 58" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M145 58 L172 62" stroke="#2a3040" stroke-width="12" stroke-linecap="round" fill="none"/><text x="100" y="105" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Hands walk out to plank</text></svg>`,
+    'lunge-twist': `<svg viewBox="0 0 200 180" class="diagram-svg"><circle cx="95" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M95 56 L100 108" stroke="${col}" stroke-width="22" stroke-linecap="round" fill="none"/><path d="M117 70 L155 50 L162 40" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M88 108 Q76 145 62 175" stroke="${col}" stroke-width="15" stroke-linecap="round" fill="none"/><path d="M112 108 Q128 142 148 162" stroke="${col}" stroke-width="15" stroke-linecap="round" fill="none"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lunge + rotate toward leg</text></svg>`,
+    'shuffles': `<svg viewBox="0 0 200 150" class="diagram-svg"><circle cx="100" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="100" rx="34" ry="44" fill="#2a3040" stroke="${col}" stroke-width="1.5"/><path d="M30 135 L175 135" stroke="${col}" stroke-width="2" stroke-dasharray="5 3" opacity="0.5"/><path d="M175 128 L185 135 L175 142" fill="${col}" opacity="0.8"/><path d="M30 142 L20 135 L30 128" fill="${col}" opacity="0.8"/><text x="100" y="155" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Stay low · Quick lateral steps</text></svg>`,
+    'knee-circles': `<svg viewBox="0 0 200 200" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="120" rx="34" ry="52" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><ellipse cx="80" cy="165" rx="18" ry="14" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><ellipse cx="120" cy="165" rx="18" ry="14" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Circle both directions</text></svg>`,
+    'scap-pushup': `<svg viewBox="0 0 200 120" class="diagram-svg"><circle cx="42" cy="38" r="16" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><path d="M52 48 L150 58" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M78 46 L100 54 L78 55" stroke="${col}" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.5"/><text x="95" y="112" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Squeeze &amp; spread blades</text></svg>`,
+    'worlds-greatest': `<svg viewBox="0 0 200 160" class="diagram-svg"><circle cx="50" cy="38" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M55 52 L100 70" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M100 70 L148 75" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M100 70 L112 115" stroke="${col}" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M130 44 L158 22 L162 12" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M158 10 L166 4 L162 14" fill="${col}"/><text x="95" y="155" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lunge + reach to ceiling</text></svg>`,
+    'leg-swings': `<svg viewBox="0 0 200 180" class="diagram-svg"><circle cx="80" cy="38" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="80" cy="110" rx="30" ry="46" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M92 155 Q100 130 108 108 Q115 82 120 62" stroke="${col}" stroke-width="12" stroke-linecap="round" fill="none"/><path d="M120 60 L125 48 L128 62" fill="${col}"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Pendulum · Fwd &amp; back</text></svg>`,
+    'ankle-circles': `<svg viewBox="0 0 200 180" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="105" rx="34" ry="50" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M120 155 Q125 172 132 185" stroke="${col}" stroke-width="14" stroke-linecap="round" fill="none"/><ellipse cx="138" cy="168" rx="20" ry="14" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="5 3"/><text x="100" y="195" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Lift foot · Circle ankle</text></svg>`,
+    'pike-pushup': `<svg viewBox="0 0 200 150" class="diagram-svg"><circle cx="100" cy="35" r="16" fill="#2a3040" stroke="${col}" stroke-width="2"/><path d="M100 50 L68 80" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M100 50 L132 80" stroke="${col}" stroke-width="20" stroke-linecap="round" fill="none"/><path d="M68 80 L62 112" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/><path d="M132 80 L138 112" stroke="#2a3040" stroke-width="14" stroke-linecap="round" fill="none"/><text x="100" y="148" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Inverted V · Crown down</text></svg>`,
+    'calf-raise': `<svg viewBox="0 0 200 180" class="diagram-svg"><circle cx="100" cy="36" r="20" fill="#2a3040" stroke="#3a4050" stroke-width="1.5"/><ellipse cx="100" cy="110" rx="32" ry="48" fill="#2a3040" stroke="#3a4050" stroke-width="1"/><path d="M80 158 Q78 170 80 180" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M120 158 Q122 170 120 180" stroke="${col}" stroke-width="16" stroke-linecap="round" fill="none"/><path d="M70 180 L130 180" stroke="#3a4050" stroke-width="2" stroke-dasharray="4 4"/><text x="100" y="198" text-anchor="middle" fill="#7a8299" font-size="11" font-family="sans-serif">Rise high · Slow lower</text></svg>`
+  };
+  return d[type] || d['push-up'];
+}
+
+// ════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════
+let currentLevel = 'beginner';
+let currentDay = null;
+let restTimerInterval = null;
+let workoutTimerInterval = null;
+let workoutSeconds = 0;
+let workoutTimerRunning = false;
+
+// ════════════════════════════════════════════════
+// NAVIGATION
+// ════════════════════════════════════════════════
+function showPage(page) {
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  const mobEl = document.getElementById('mob-' + page);
+  if (mobEl) mobEl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '✅', info: 'ℹ️', warning: '⚠️' };
+  toast.innerHTML = `<span>${icons[type] || '💬'}</span><span>${msg}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.remove(), 3200);
+}
+
+// ════════════════════════════════════════════════
+// WORKOUT TIMER
+// ════════════════════════════════════════════════
+function toggleWorkoutTimer() {
+  if (workoutTimerRunning) {
+    clearInterval(workoutTimerInterval);
+    workoutTimerRunning = false;
+    document.getElementById('wtToggleBtn').textContent = '▶';
+  } else {
+    workoutTimerInterval = setInterval(() => {
+      workoutSeconds++;
+      updateWTDisplay();
+    }, 1000);
+    workoutTimerRunning = true;
+    document.getElementById('wtToggleBtn').textContent = '⏸';
+  }
+}
+function resetWorkoutTimer() {
+  clearInterval(workoutTimerInterval);
+  workoutTimerRunning = false;
+  workoutSeconds = 0;
+  updateWTDisplay();
+  document.getElementById('wtToggleBtn').textContent = '▶';
+}
+function updateWTDisplay() {
+  const m = Math.floor(workoutSeconds / 60).toString().padStart(2, '0');
+  const s = (workoutSeconds % 60).toString().padStart(2, '0');
+  const el = document.getElementById('wtDisplay');
+  if (el) el.textContent = `${m}:${s}`;
+  const ssTime = document.getElementById('ss-time');
+  if (ssTime) ssTime.textContent = Math.max(Math.round(workoutSeconds / 60), 1);
+}
+
+// ════════════════════════════════════════════════
+// REST TIMER
+// ════════════════════════════════════════════════
+function startRestTimer(exId, seconds) {
+  if (!seconds) return;
+  clearInterval(restTimerInterval);
+  const bar = document.getElementById(`rtb-${exId}`);
+  if (!bar) return;
+  bar.classList.add('visible');
+  let remaining = seconds;
+  const fill = bar.querySelector('.rtb-fill');
+  const timeEl = bar.querySelector('.rtb-time');
+  fill.style.width = '100%';
+  timeEl.textContent = remaining;
+  restTimerInterval = setInterval(() => {
+    remaining--;
+    if (fill) fill.style.width = ((remaining / seconds) * 100) + '%';
+    if (timeEl) timeEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(restTimerInterval);
+      if (bar) bar.classList.remove('visible');
+      // Audio beep via Web Audio API
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.4);
+      } catch(e) {}
+      showToast('Rest complete — begin next set!', 'success');
+    }
+  }, 1000);
+}
+function skipRestTimer(exId) {
+  clearInterval(restTimerInterval);
+  const bar = document.getElementById(`rtb-${exId}`);
+  if (bar) bar.classList.remove('visible');
+}
+
+// ════════════════════════════════════════════════
+// LEVEL
+// ════════════════════════════════════════════════
+function setLevel(level, btn) {
+  currentLevel = level;
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (currentDay) renderWorkout(currentDay);
+}
+
+// ════════════════════════════════════════════════
+// AUTO LOAD TODAY
+// ════════════════════════════════════════════════
+function autoLoadToday() {
+  const today = new Date().getDay();
+  const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  loadDay(dayNames[today]);
+  showPage('workouts');
+}
+
+// ════════════════════════════════════════════════
+// LOAD DAY
+// ════════════════════════════════════════════════
+function loadDay(day) {
+  currentDay = day;
+  resetWorkoutTimer();
+  document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+  const pill = document.getElementById('pill-' + day);
+  if (pill) pill.classList.add('active');
+
+  document.getElementById('workout-placeholder').style.display = 'none';
+  document.getElementById('workout-active-view').style.display = 'none';
+  document.getElementById('rest-day-view').classList.remove('visible');
+  document.getElementById('completionPanel').classList.remove('visible');
+
+  if (day === 'sunday') {
+    document.getElementById('rest-day-view').classList.add('visible');
+    return;
+  }
+
+  document.getElementById('workout-active-view').style.display = 'block';
+  renderWorkout(day);
+}
+
+// ════════════════════════════════════════════════
+// RENDER WORKOUT
+// ════════════════════════════════════════════════
+function renderWorkout(day) {
+  const data = workoutData[day];
+  if (!data) return;
+
+  document.getElementById('workout-title').innerHTML = `${data.title}<br><span>${data.subtitle}</span>`;
+
+  const completedKey = `completed_${day}`;
+  const completedData = JSON.parse(localStorage.getItem(completedKey) || '{}');
+  const setDataKey = `sets_${day}`;
+  const setData = JSON.parse(localStorage.getItem(setDataKey) || '{}');
+
+  let html = '';
+  let sectionShown = {};
+  const sectionTag = { circulation:'tag-circulation', warmup:'tag-warmup', fatloss:'tag-fatloss', muscle:'tag-muscle', cooldown:'tag-cooldown' };
+
+  data.exercises.forEach((ex, idx) => {
+    const isCompleted = completedData[ex.id] || false;
+    const sets = typeof ex.sets === 'object' ? ex.sets[currentLevel] : ex.sets;
+    const reps = typeof ex.reps === 'object' ? ex.reps[currentLevel] : ex.reps;
+    const sLabel = { circulation:'Head & Neck Circulation', warmup:'Warm-Up', fatloss:'Fat Loss Cardio', muscle:'Muscle Building', cooldown:'Cool Down' };
+
+    if (!sectionShown[ex.section]) {
+      sectionShown[ex.section] = true;
+      html += `<div class="ex-section-label">
+        <span class="ex-section-tag ${sectionTag[ex.section] || 'tag-muscle'}">${sLabel[ex.section] || ex.section}</span>
+        <div class="ex-section-line"></div>
+      </div>`;
+    }
+
+    // Build set rows
+    let setRowsHTML = '';
+    const savedSets = setData[ex.id] || {};
+    for (let s = 1; s <= sets; s++) {
+      const saved = savedSets[s] || {};
+      const doneCls = saved.done ? 'done' : '';
+      setRowsHTML += `<div class="set-row" id="setrow-${ex.id}-${s}">
+        <div class="set-row-num">${s}</div>
+        <div class="set-input-wrap">
+          <input type="number" class="set-input" id="si-reps-${ex.id}-${s}" placeholder="${reps}" value="${saved.reps || ''}" min="0" onchange="saveSetData('${day}','${ex.id}',${s})">
+          <div class="set-input-label">Reps</div>
+        </div>
+        <div class="set-input-wrap">
+          <input type="number" class="set-input" id="si-weight-${ex.id}-${s}" placeholder="BW" value="${saved.weight || ''}" min="0" onchange="saveSetData('${day}','${ex.id}',${s})">
+          <div class="set-input-label">Wt (kg)</div>
+        </div>
+        <button class="set-done-btn ${doneCls}" id="sdb-${ex.id}-${s}" onclick="markSetDone('${day}','${ex.id}',${s},${sets},'${ex.section}',${ex.restSeconds})" title="Mark set complete">✓</button>
+      </div>`;
+    }
+
+    // Badge
+    const badgeMap = { circulation:'badge-circ', warmup:'badge-circ', fatloss:'badge-cardio', muscle:'badge-muscle', cooldown:'badge-circ' };
+    const badgeLbl = { circulation:'Mobility', warmup:'Warm-Up', fatloss:'Cardio', muscle:'Strength', cooldown:'Recovery' };
+
+    html += `<div class="exercise-card ${isCompleted ? 'completed' : ''}" id="card-${ex.id}">
+      <div class="ex-header" onclick="toggleExercise('${ex.id}')">
+        <div class="ex-number">${String(idx + 1).padStart(2, '0')}</div>
+        <div class="ex-info">
+          <div class="ex-name">${ex.name}</div>
+          <div class="ex-meta">
+            <div class="ex-meta-item">Sets: <strong>${sets}</strong></div>
+            <div class="ex-meta-item">Reps: <strong>${reps}</strong></div>
+            ${ex.duration ? `<div class="ex-meta-item"><strong>${ex.duration}</strong></div>` : ''}
+          </div>
+        </div>
+        <div class="ex-badges">
+          <span class="ex-badge ${badgeMap[ex.section]}">${badgeLbl[ex.section]}</span>
+        </div>
+        <button class="ex-complete-btn ${isCompleted ? 'done' : ''}" onclick="event.stopPropagation(); toggleComplete('${ex.id}','${day}')">${isCompleted ? '✓ Done' : 'Done'}</button>
+        <div class="ex-toggle" id="toggle-${ex.id}">▾</div>
+      </div>
+      <div class="ex-body" id="body-${ex.id}">
+        <div class="ex-body-inner">
+          <div class="ex-content">
+            <div class="mini-tags">
+              ${ex.muscles ? `<span class="mini-tag mt-green">${ex.muscles}</span>` : ''}
+              ${ex.calories ? `<span class="mini-tag mt-orange">${ex.calories}</span>` : ''}
+            </div>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:12px;line-height:1.6;">${ex.purpose}</p>
+            ${ex.benefits ? `<div class="benefits-row">${ex.benefits.map(b=>`<span class="benefit-pill">✦ ${b}</span>`).join('')}</div>` : ''}
+            
+            <div class="info-grid">
+              <div class="info-box"><div class="info-box-label">Sets</div><div class="info-box-val">${sets}</div></div>
+              <div class="info-box"><div class="info-box-label">Reps / Duration</div><div class="info-box-val">${reps}</div></div>
+              ${ex.rest ? `<div class="info-box"><div class="info-box-label">Rest Between Sets</div><div class="info-box-val">${ex.rest}</div></div>` : ''}
+              ${ex.duration ? `<div class="info-box"><div class="info-box-label">Duration</div><div class="info-box-val">${ex.duration}</div></div>` : ''}
+            </div>
+
+            <!-- REST TIMER BAR -->
+            <div class="rest-timer-bar" id="rtb-${ex.id}">
+              <div class="rtb-icon">😮‍💨</div>
+              <div class="rtb-content">
+                <div class="rtb-label">Rest Period</div>
+                <div class="rtb-progress"><div class="rtb-fill" style="width:100%"></div></div>
+                <div class="rtb-skip" onclick="skipRestTimer('${ex.id}')">Skip rest →</div>
+              </div>
+              <div class="rtb-time">–</div>
+            </div>
+
+            <!-- SET TRACKER -->
+            <div class="set-tracker">
+              <div class="set-tracker-title">📋 Set Tracker — Log Your Reps</div>
+              <div class="set-rows" id="setrows-${ex.id}">${setRowsHTML}</div>
+            </div>
+
+            <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;font-weight:600;">Step-by-Step Instructions</div>
+            <ol class="steps-list">
+              ${ex.steps.map((s,i)=>`<li><span class="step-num">${i+1}</span><span>${s}</span></li>`).join('')}
+            </ol>
+            ${(ex.caution || ex.mistake) ? `<div class="safety-box">⚠️ <strong>${ex.caution ? 'Safety: ' : 'Common Mistake: '}</strong>${ex.caution || ex.mistake}</div>` : ''}
+          </div>
+          <div class="ex-diagram-panel">
+            ${getDiagramSVG(ex.diagramType, ex.section)}
+            <div class="target-chips">
+              ${ex.targetAreas ? ex.targetAreas.map(a=>`<span class="target-chip">${a}</span>`).join('') : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  document.getElementById('exercise-list').innerHTML = html;
+  updateWorkoutStats(day);
+}
+
+// ════════════════════════════════════════════════
+// SET TRACKING
+// ════════════════════════════════════════════════
+function saveSetData(day, exId, setNum) {
+  const key = `sets_${day}`;
+  const data = JSON.parse(localStorage.getItem(key) || '{}');
+  if (!data[exId]) data[exId] = {};
+  data[exId][setNum] = {
+    reps: document.getElementById(`si-reps-${exId}-${setNum}`)?.value || '',
+    weight: document.getElementById(`si-weight-${exId}-${setNum}`)?.value || '',
+    done: data[exId][setNum]?.done || false
+  };
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+function markSetDone(day, exId, setNum, totalSets, section, restSeconds) {
+  const key = `sets_${day}`;
+  const data = JSON.parse(localStorage.getItem(key) || '{}');
+  if (!data[exId]) data[exId] = {};
+  saveSetData(day, exId, setNum);
+  data[exId][setNum] = JSON.parse(localStorage.getItem(key))[exId][setNum];
+  data[exId][setNum].done = !data[exId][setNum].done;
+  localStorage.setItem(key, JSON.stringify(data));
+
+  const btn = document.getElementById(`sdb-${exId}-${setNum}`);
+  if (btn) btn.classList.toggle('done', data[exId][setNum].done);
+
+  // Check if all sets done → auto-complete + start rest timer
+  if (data[exId][setNum].done) {
+    const allDone = Array.from({length: totalSets}, (_, i) => i + 1)
+      .every(s => data[exId]?.[s]?.done);
+    if (allDone) {
+      toggleComplete(exId, day, true);
+      showToast(`✓ ${totalSets} sets complete! Rest period starting…`, 'success');
+    } else {
+      startRestTimer(exId, restSeconds);
+    }
+  }
+}
+
+// ════════════════════════════════════════════════
+// EXERCISE COMPLETE TOGGLE
+// ════════════════════════════════════════════════
+function toggleComplete(id, day, silent = false) {
+  const key = `completed_${day}`;
+  const completed = JSON.parse(localStorage.getItem(key) || '{}');
+  if (!silent) { completed[id] = !completed[id]; }
+  else { completed[id] = true; }
+  localStorage.setItem(key, JSON.stringify(completed));
+
+  const card = document.getElementById('card-' + id);
+  const btn = card?.querySelector('.ex-complete-btn');
+  if (completed[id]) {
+    card?.classList.add('completed');
+    if (btn) { btn.classList.add('done'); btn.textContent = '✓ Done'; }
+  } else {
+    card?.classList.remove('completed');
+    if (btn) { btn.classList.remove('done'); btn.textContent = 'Done'; }
+  }
+
+  updateWorkoutStats(day);
+  updateDashboard();
+
+  // Check full workout completion
+  const data = workoutData[day];
+  if (data) {
+    const allDone = data.exercises.every(ex => completed[ex.id]);
+    if (allDone) showCompletionPanel(day);
+  }
+}
+
+// ════════════════════════════════════════════════
+// WORKOUT STATS STRIP
+// ════════════════════════════════════════════════
+function updateWorkoutStats(day) {
+  const data = workoutData[day];
+  if (!data) return;
+  const completed = JSON.parse(localStorage.getItem(`completed_${day}`) || '{}');
+  const total = data.exercises.length;
+  const done = data.exercises.filter(ex => completed[ex.id]).length;
+  let cals = 0;
+  data.exercises.filter(ex => completed[ex.id]).forEach(ex => {
+    const sets = typeof ex.sets === 'object' ? ex.sets[currentLevel] : (ex.sets || 2);
+    cals += Math.round((ex.caloriesPerMin || 5) * (ex.duration ? parseFloat(ex.duration) / 60 : 0.5) * sets);
+  });
+  const ssEx = document.getElementById('ss-exercises');
+  const ssDone = document.getElementById('ss-done');
+  const ssCal = document.getElementById('ss-calories');
+  if (ssEx) ssEx.textContent = total;
+  if (ssDone) ssDone.textContent = done;
+  if (ssCal) ssCal.textContent = '~' + Math.max(cals, done * 8);
+}
+
+// ════════════════════════════════════════════════
+// COMPLETION PANEL
+// ════════════════════════════════════════════════
+function showCompletionPanel(day) {
+  const data = workoutData[day];
+  if (!data) return;
+  const completed = JSON.parse(localStorage.getItem(`completed_${day}`) || '{}');
+  let cals = 0;
+  data.exercises.forEach(ex => {
+    const sets = typeof ex.sets === 'object' ? ex.sets[currentLevel] : (ex.sets || 2);
+    cals += Math.round((ex.caloriesPerMin || 5) * (ex.duration ? parseFloat(ex.duration) / 60 : 0.5) * sets);
+  });
+  const panel = document.getElementById('completionPanel');
+  document.getElementById('cp-exercises').textContent = data.exercises.length;
+  document.getElementById('cp-time').textContent = Math.max(Math.round(workoutSeconds / 60), 28);
+  document.getElementById('cp-cals').textContent = '~' + Math.max(cals, 120);
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  showToast('🎉 Workout complete! Amazing work!', 'success');
+  localStorage.setItem('total_workouts_done', (parseInt(localStorage.getItem('total_workouts_done') || '0') + 1).toString());
+  updateDashboard();
+}
+
+// ════════════════════════════════════════════════
+// RESET DAY
+// ════════════════════════════════════════════════
+function resetDayProgress() {
+  if (!currentDay || !confirm('Reset all progress for today?')) return;
+  localStorage.removeItem(`completed_${currentDay}`);
+  localStorage.removeItem(`sets_${currentDay}`);
+  document.getElementById('completionPanel').classList.remove('visible');
+  renderWorkout(currentDay);
+  showToast('Progress reset for ' + currentDay, 'info');
+}
+
+// ════════════════════════════════════════════════
+// TOGGLE EXERCISE
+// ════════════════════════════════════════════════
+function toggleExercise(id) {
+  const body = document.getElementById('body-' + id);
+  const toggle = document.getElementById('toggle-' + id);
+  body?.classList.toggle('open');
+  toggle?.classList.toggle('open');
+}
+
+// ════════════════════════════════════════════════
+// DASHBOARD
+// ════════════════════════════════════════════════
+const measurementFields = [
+  { key:'weight', label:'Body Weight', unit:'kg' },
+  { key:'waist', label:'Waist', unit:'cm' },
+  { key:'chest', label:'Chest', unit:'cm' },
+  { key:'hips', label:'Hips', unit:'cm' },
+  { key:'arm', label:'Arm (Bicep)', unit:'cm' },
+  { key:'thigh', label:'Thigh', unit:'cm' }
+];
+
+function initDashboard() {
+  const grid = document.getElementById('measurement-inputs');
+  if (grid) {
+    grid.innerHTML = measurementFields.map(f => `
+      <div class="tracker-card">
+        <label>${f.label}</label>
+        <div class="tracker-row">
+          <input type="number" class="tracker-input" id="input-${f.key}" placeholder="0" step="0.1">
+          <span class="tracker-unit">${f.unit}</span>
+        </div>
+      </div>`).join('');
+  }
+
+  // Week dots
+  const days = ['M','T','W','T','F','S','S'];
+  const today = new Date().getDay();
+  const dayMap = [6,0,1,2,3,4,5];
+  const weekDots = document.getElementById('week-dots');
+  if (weekDots) {
+    weekDots.innerHTML = days.map((d,i) => {
+      const isToday = dayMap[today] === i;
+      const isDone = localStorage.getItem(`week_done_${i}`) === '1';
+      return `<div class="week-dot ${isDone?'done':''} ${isToday?'today':''}" onclick="toggleWeekDay(${i},this)">${d}</div>`;
+    }).join('');
+  }
+
+  // Month bars
+  const monthNames = ['Foundation','Building','Strengthening','Intensifying','Advanced','Transformation'];
+  const monthBars = document.getElementById('month-bars');
+  if (monthBars) {
+    monthBars.innerHTML = monthNames.map((n,i) => `
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px;">
+          <span>Month ${i+1} — ${n}</span><span id="m${i+1}-pct" style="color:var(--accent)">0%</span>
+        </div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="m${i+1}-bar" style="width:0%"></div></div>
+      </div>`).join('');
+  }
+
+  updateDashboard();
+  loadHistory();
+}
+
+function toggleWeekDay(idx, el) {
+  const key = `week_done_${idx}`;
+  const current = localStorage.getItem(key) === '1';
+  current ? localStorage.removeItem(key) : localStorage.setItem(key, '1');
+  el.classList.toggle('done', !current);
+  updateDashboard();
+}
+
+function updateDashboard() {
+  const days = ['monday','tuesday','wednesday','thursday','friday','saturday'];
+  let totalDone = 0;
+  days.forEach(day => {
+    const c = JSON.parse(localStorage.getItem(`completed_${day}`) || '{}');
+    if (Object.values(c).some(v => v)) totalDone++;
+  });
+
+  let weekDays = 0;
+  for (let i = 0; i < 7; i++) if (localStorage.getItem(`week_done_${i}`) === '1') weekDays++;
+
+  const streak = weekDays;
+  const totalWorkouts = parseInt(localStorage.getItem('total_workouts_done') || '0');
+  const weeksConsistent = Math.floor(totalWorkouts / 5);
+
+  const sc = document.getElementById('streak-count');
+  const wd = document.getElementById('workouts-done');
+  const wc = document.getElementById('weeks-consistent');
+  const pp = document.getElementById('program-pct');
+
+  if (sc) sc.textContent = streak;
+  if (wd) wd.textContent = totalWorkouts;
+  if (wc) wc.textContent = weeksConsistent;
+
+  const pct = Math.min(Math.round((totalWorkouts / 180) * 100), 100);
+  if (pp) pp.innerHTML = pct + '<small style="font-size:22px">%</small>';
+
+  const perMonth = 26;
+  for (let m = 1; m <= 6; m++) {
+    const start = (m-1) * perMonth;
+    const end = m * perMonth;
+    let mPct = 0;
+    if (totalWorkouts >= end) mPct = 100;
+    else if (totalWorkouts > start) mPct = Math.round(((totalWorkouts - start) / perMonth) * 100);
+    const pctEl = document.getElementById(`m${m}-pct`);
+    const barEl = document.getElementById(`m${m}-bar`);
+    if (pctEl) pctEl.textContent = mPct + '%';
+    if (barEl) barEl.style.width = mPct + '%';
+  }
+
+  // Update day pills to show completed indicator
+  const dayKeys = ['monday','tuesday','wednesday','thursday','friday','saturday'];
+  dayKeys.forEach(day => {
+    const pill = document.getElementById('pill-' + day);
+    if (!pill) return;
+    const c = JSON.parse(localStorage.getItem(`completed_${day}`) || '{}');
+    const data = workoutData[day];
+    if (!data) return;
+    const allDone = data.exercises.every(ex => c[ex.id]);
+    if (allDone) {
+      if (!pill.querySelector('.done-dot')) {
+        const dot = document.createElement('span');
+        dot.className = 'done-dot';
+        pill.prepend(dot);
+      }
+    }
+  });
+}
+
+function saveMeasurements() {
+  const data = { date: new Date().toLocaleDateString('en-GB') };
+  let hasData = false;
+  measurementFields.forEach(f => {
+    const val = document.getElementById('input-' + f.key)?.value;
+    data[f.key] = val || '-';
+    if (val) hasData = true;
+  });
+  if (!hasData) { showToast('Please enter at least one measurement.', 'warning'); return; }
+  const history = JSON.parse(localStorage.getItem('measurement_history') || '[]');
+  history.unshift(data);
+  localStorage.setItem('measurement_history', JSON.stringify(history.slice(0, 30)));
+  measurementFields.forEach(f => { const el = document.getElementById('input-' + f.key); if (el) el.value = ''; });
+  loadHistory();
+  showToast('Measurements saved!', 'success');
+}
+
+function loadHistory() {
+  const history = JSON.parse(localStorage.getItem('measurement_history') || '[]');
+  const tbody = document.getElementById('history-tbody');
+  if (!tbody) return;
+  if (!history.length) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);font-style:italic;padding:20px;">No measurements saved yet. Enter yours above to begin tracking.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = history.slice(0, 12).map(row => `
+    <tr>
+      <td>${row.date}</td>
+      <td>${row.weight} kg</td>
+      <td>${row.waist} cm</td>
+      <td>${row.chest} cm</td>
+      <td>${row.hips} cm</td>
+      <td>${row.arm} cm</td>
+      <td>${row.thigh} cm</td>
+    </tr>`).join('');
+}
+
+// ════════════════════════════════════════════════
+// QUOTES
+// ════════════════════════════════════════════════
+const quotes = [
+  { q: '"The body achieves what the mind believes."', a: '— Napoleon Hill' },
+  { q: '"Take care of your body. It\'s the only place you have to live."', a: '— Jim Rohn' },
+  { q: '"Strength does not come from physical capacity. It comes from an indomitable will."', a: '— Mahatma Gandhi' },
+  { q: '"Physical fitness is not only one of the most important keys to a healthy body, it is the basis of dynamic and creative intellectual activity."', a: '— John F. Kennedy' },
+  { q: '"The secret of getting ahead is getting started."', a: '— Mark Twain' },
+  { q: '"Motivation gets you started. Habit keeps you going."', a: '— Jim Ryun' },
+  { q: '"You don\'t have to be great to start, but you have to start to be great."', a: '— Zig Ziglar' },
+  { q: '"The pain you feel today will be the strength you feel tomorrow."', a: '— Arnold Schwarzenegger' },
+  { q: '"Champions aren\'t made in gyms. They\'re made from something they have deep inside."', a: '— Muhammad Ali' },
+  { q: '"It never gets easier. You just get stronger."', a: '— Unknown' },
+  { q: '"Your body can stand almost anything. It\'s your mind that you have to convince."', a: '— Unknown' },
+  { q: '"The only bad workout is the one that didn\'t happen."', a: '— Unknown' }
+];
+let quoteIdx = Math.floor(Math.random() * quotes.length);
+
+function nextQuote() {
+  quoteIdx = (quoteIdx + 1) % quotes.length;
+  const q = document.getElementById('daily-quote');
+  const a = document.getElementById('quote-author');
+  if (q) q.textContent = quotes[quoteIdx].q;
+  if (a) a.textContent = quotes[quoteIdx].a;
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  initDashboard();
+  const q = document.getElementById('daily-quote');
+  const a = document.getElementById('quote-author');
+  if (q) q.textContent = quotes[quoteIdx].q;
+  if (a) a.textContent = quotes[quoteIdx].a;
+
+  // Auto-suggest today's workout
+  const today = new Date().getDay();
+  const dayNames = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+  const todayName = dayNames[today];
+  if (todayName !== 'sunday') {
+    const pill = document.getElementById('pill-' + todayName);
+    if (pill) {
+      pill.style.borderColor = 'rgba(232,255,71,0.4)';
+      pill.setAttribute('title', "Today's workout — click to load");
+    }
+  }
+});
+</script>
+</body>
+</html>
